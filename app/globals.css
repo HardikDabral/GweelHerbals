@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/* NB International Pro Webfont */
+@font-face {
+  font-family: "NB International Pro";
+  src: url("/fonts/NBInternationalPro-Regular.woff2") format("woff2"),
+       url("/fonts/NBInternationalPro-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NB International Pro";
+  src: url("/fonts/NBInternationalPro-Medium.woff2") format("woff2"),
+       url("/fonts/NBInternationalPro-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NB International Pro";
+  src: url("/fonts/NBInternationalPro-Semibold.woff2") format("woff2"),
+       url("/fonts/NBInternationalPro-Semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "NB International Pro";
+  src: url("/fonts/NBInternationalPro-Bold.woff2") format("woff2"),
+       url("/fonts/NBInternationalPro-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #6c5ce7;
+  --primary-foreground: #ffffff;
+  --secondary: #4ecdc4;
+  --secondary-foreground: #ffffff;
+  --muted: #f1f3f5;
+  --muted-foreground: #6c757d;
+  --accent: #ff6b6b;
+  --accent-foreground: #ffffff;
+  --border: #e9ecef;
+  --input: #e9ecef;
+  --ring: #6c5ce7;
+}
+
+.dark {
+  --background: #1A1A1A;
+  --foreground: #F2F2F2;
+  --primary: #FEBE10;
+  --primary-foreground: #1A1A1A;
+  --secondary: #1A1A1A;
+  --secondary-foreground: #FEBE10;
+  --muted: #2a2a2a;
+  --muted-foreground: #F2F2F2;
+  --accent: #FEBE10;
+  --border: #3d3d3d;
+  --input: #2a2a2a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: var(--font-manrope), "NB International Pro", Arial, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
