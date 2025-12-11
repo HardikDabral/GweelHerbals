@@ -191,20 +191,7 @@ export function Navbar() {
 
           {/* Mobile: Theme Toggle & Burger Icon on Right */}
           <div className="lg:hidden flex items-center gap-2">
-            <motion.button
-              onClick={toggleTheme}
-              className="p-2 rounded-full bg-white/10 dark:bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 transition-all"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: 0.5 }}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="w-4 h-4" />
-              ) : (
-                <Moon className="w-4 h-4" />
-              )}
-            </motion.button>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white p-2"
