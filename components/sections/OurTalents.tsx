@@ -184,6 +184,7 @@ export default function OurTalents() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const { theme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Carousel setup for mobile
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -234,6 +235,13 @@ export default function OurTalents() {
 
     return () => observer.disconnect();
   }, [theme]);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <section id="why-us" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background overflow-visible">
@@ -311,177 +319,179 @@ export default function OurTalents() {
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden lg:block relative" style={{ perspective: "1000px" }}>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 auto-rows-fr">
-            {talents.map((talent, index) => {
-              // Add empty placeholder before Herbal Teas to maintain grid positions
-              const isComedians = talent.id === 6 && talent.name === "Herbal Teas";
-              return (
-                <React.Fragment key={talent.id}>
-                  {isComedians && (
-                    <div key="placeholder-actors" className="col-span-1 md:col-span-1 row-span-1" />
-                  )}
-                  <div
-                    key={talent.id}
-                    className={`relative ${talent.gridSpan}`}
-                    style={{ zIndex: hoveredId === talent.id ? 10 : 1 }}
-                    onMouseEnter={() => setHoveredId(talent.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                  >
-                    <Card3DInteractive
-                      className="relative rounded-2xl overflow-hidden cursor-pointer w-full h-full"
-                      isHovered={hoveredId === talent.id}
+        {!isMobile && (
+          <div className="hidden lg:block relative" style={{ perspective: "1000px" }}>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 auto-rows-fr">
+              {talents.map((talent, index) => {
+                // Add empty placeholder before Herbal Teas to maintain grid positions
+                const isComedians = talent.id === 6 && talent.name === "Herbal Teas";
+                return (
+                  <React.Fragment key={talent.id}>
+                    {isComedians && (
+                      <div key="placeholder-actors" className="col-span-1 md:col-span-1 row-span-1" />
+                    )}
+                    <div
+                      key={talent.id}
+                      className={`relative ${talent.gridSpan}`}
+                      style={{ zIndex: hoveredId === talent.id ? 10 : 1 }}
+                      onMouseEnter={() => setHoveredId(talent.id)}
+                      onMouseLeave={() => setHoveredId(null)}
                     >
-                      <motion.div
-                        className="relative w-full h-full min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
-                        style={{
-                          transformStyle: "preserve-3d",
-                        }}
+                      <Card3DInteractive
+                        className="relative rounded-2xl overflow-hidden cursor-pointer w-full h-full"
+                        isHovered={hoveredId === talent.id}
                       >
-                        <Image
-                          src={talent.image}
-                          alt={talent.name}
-                          fill
-                          className="object-cover"
-                          priority={talent.id <= 4}
-                        />
-
-                        {/* Overlay Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-
-                        {/* Content */}
                         <motion.div
-                          className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6"
+                          className="relative w-full h-full min-h-[200px] sm:min-h-[250px] md:min-h-[300px]"
                           style={{
                             transformStyle: "preserve-3d",
                           }}
-                          animate={{
-                            transform: hoveredId === talent.id ? "translateZ(20px)" : "translateZ(0px)",
-                          }}
-                          transition={{ duration: 0.4 }}
                         >
+                          <Image
+                            src={talent.image}
+                            alt={talent.name}
+                            fill
+                            className="object-cover"
+                            priority={talent.id <= 4}
+                          />
+
+                          {/* Overlay Gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+
+                          {/* Content */}
                           <motion.div
-                            animate={{
-                              y: hoveredId === talent.id ? 0 : 10,
-                              opacity: hoveredId === talent.id ? 1 : 0.9,
+                            className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6"
+                            style={{
+                              transformStyle: "preserve-3d",
                             }}
-                            transition={{ duration: 0.3 }}
+                            animate={{
+                              transform: hoveredId === talent.id ? "translateZ(20px)" : "translateZ(0px)",
+                            }}
+                            transition={{ duration: 0.4 }}
                           >
-                            <p className="text-white/70 text-xs sm:text-sm mb-1 font-medium">
-                              {talent.category}
-                            </p>
-                            <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold">
-                              {talent.name}
-                            </h3>
+                            <motion.div
+                              animate={{
+                                y: hoveredId === talent.id ? 0 : 10,
+                                opacity: hoveredId === talent.id ? 1 : 0.9,
+                              }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <p className="text-white/70 text-xs sm:text-sm mb-1 font-medium">
+                                {talent.category}
+                              </p>
+                              <h3 className="text-white text-lg sm:text-xl md:text-2xl font-bold">
+                                {talent.name}
+                              </h3>
+                            </motion.div>
                           </motion.div>
                         </motion.div>
-                      </motion.div>
-                    </Card3DInteractive>
-                  </div>
-                </React.Fragment>
-              );
-            })}
+                      </Card3DInteractive>
+                    </div>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+
+            {/* Quotes in Gap - Below Singers, Right of Acrobats - Desktop Only */}
+            <div
+              className="hidden lg:flex absolute top-[300px] left-[calc(75%+1.25rem)] right-4 flex-col items-start gap-6 pointer-events-none"
+              style={{ top: "calc(40% + 1.25rem)" }}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-left"
+              >
+                <p
+                  className="text-xs mb-1"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Pure Origin
+                </p>
+                <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
+                  <TypewriterText text="Every product tells the story of the land it comes from." />
+                </p>
+                <p
+                  className="text-xs"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Grown in the pristine air of Pauri Garhwal.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-left"
+              >
+                <p
+                  className="text-xs mb-1"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Certified Quality
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Quotes on Right Side of Painters Card - Desktop Only */}
+            <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] max-w-[600px] flex-col items-start gap-6 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-left"
+              >
+                <p
+                  className="text-xs mb-1"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Holistic Wellness
+                </p>
+                <p
+                  className="text-base md:text-lg font-medium leading-relaxed mb-2"
+                  style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
+                >
+                  We blend tradition with purity to nurture your well-being.
+                </p>
+                <p
+                  className="text-xs"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Shareable in a link, bookable in a click.
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-left"
+              >
+
+                <p
+                  className="text-xs mb-1"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  Growth over time
+                </p>
+                <p
+                  className="text-base md:text-lg font-medium leading-relaxed mb-2"
+                  style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
+                >
+                  Track how every set, show, and collab levels up your talent profile.
+                </p>
+                <p
+                  className="text-xs"
+                  style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
+                >
+                  From first booking to world tour — see the line, not just the dots.
+                </p>
+              </motion.div>
+            </div>
           </div>
-
-          {/* Quotes in Gap - Below Singers, Right of Acrobats - Desktop Only */}
-          <div
-            className="hidden lg:flex absolute top-[300px] left-[calc(75%+1.25rem)] right-4 flex-col items-start gap-6 pointer-events-none"
-            style={{ top: "calc(40% + 1.25rem)" }}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-left"
-            >
-              <p
-                className="text-xs mb-1"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Pure Origin
-              </p>
-              <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
-                <TypewriterText text="Every product tells the story of the land it comes from." />
-              </p>
-              <p
-                className="text-xs"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Grown in the pristine air of Pauri Garhwal.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-left"
-            >
-              <p
-                className="text-xs mb-1"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Certified Quality
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Quotes on Right Side of Painters Card - Desktop Only */}
-          <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] max-w-[600px] flex-col items-start gap-6 pointer-events-none">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-left"
-            >
-              <p
-                className="text-xs mb-1"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Holistic Wellness
-              </p>
-              <p
-                className="text-base md:text-lg font-medium leading-relaxed mb-2"
-                style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
-              >
-                We blend tradition with purity to nurture your well-being.
-              </p>
-              <p
-                className="text-xs"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Shareable in a link, bookable in a click.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-left"
-            >
-
-              <p
-                className="text-xs mb-1"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                Growth over time
-              </p>
-              <p
-                className="text-base md:text-lg font-medium leading-relaxed mb-2"
-                style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
-              >
-                Track how every set, show, and collab levels up your talent profile.
-              </p>
-              <p
-                className="text-xs"
-                style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
-              >
-                From first booking to world tour — see the line, not just the dots.
-              </p>
-            </motion.div>
-          </div>
-        </div>
+        )}
       </div>
     </section>
   );

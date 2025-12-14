@@ -70,9 +70,19 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.4, 0.8, 1], [1, 0.9, 0.3, 0]);
   const blurValue = useTransform(scrollYProgress, [0, 0.6, 1], [0, 8, 30]);
   const brightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.7, 0.2]);
+  const filter = useTransform(
+    [blurValue, brightness],
+    ([blur, bright]) => `blur(${blur}px) brightness(${bright})`
+  );
+
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   return (
@@ -82,7 +92,7 @@ export function HeroSection() {
         <motion.section
           ref={heroRef}
           className="relative w-full h-full rounded-3xl overflow-hidden shadow-2xl mt-4 sm:mt-6"
-          style={{
+          style={isMobile ? {} : {
             rotateX,
             rotateY,
             rotateZ,
@@ -90,10 +100,7 @@ export function HeroSection() {
             y,
             z,
             opacity,
-            filter: useTransform(
-              [blurValue, brightness],
-              ([blur, bright]) => `blur(${blur}px) brightness(${bright})`
-            ),
+            filter,
             transformStyle: "preserve-3d",
             transformOrigin: "center center",
           }}
