@@ -3,6 +3,7 @@
 import { useEffect, useState, type ComponentType } from "react";
 import { Leaf, Droplets, Flame, Sparkles, Heart } from "lucide-react";
 import { useThemeStore } from "@/lib/store/useThemeStore";
+import { motion } from "framer-motion";
 
 type Service = {
   id: string;
@@ -141,18 +142,24 @@ export default function AboutUs() {
                       <p className={`text-lg font-semibold tracking-tight ${isDark ? "text-white" : "text-black"}`}>
                         {service.title}
                       </p>
-                      <div
-                        className={`overflow-hidden transition-all duration-400 ease-out ${isActive || 'group-hover:max-h-32'}`}
-                        style={{
-                          maxHeight: isActive ? '8rem' : '0',
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          height: isActive ? "auto" : 0,
                           opacity: isActive ? 1 : 0,
-                          marginTop: isActive ? '0.5rem' : '0',
+                          marginTop: isActive ? "0.5rem" : 0,
                         }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                        className="overflow-hidden"
                       >
                         <p className={`text-sm leading-relaxed ${cardTextMuted}`}>
                           {service.description}
                         </p>
-                      </div>
+                      </motion.div>
                     </div>
                   </div>
 

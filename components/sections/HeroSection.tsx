@@ -140,9 +140,11 @@ export function HeroSection() {
             >
               {/* Title with word-by-word animation */}
               <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-white mb-4 sm:mb-6 leading-[1.1] px-2 drop-shadow-lg"
-                variants={itemVariants}
-                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 leading-[1.1]"
+                style={{
+                  color: "#FFFFFF",
+                  textShadow: "0 4px 20px rgba(0,0,0,0.3)",
+                }}
               >
                 <motion.span
                   className="inline-block"
