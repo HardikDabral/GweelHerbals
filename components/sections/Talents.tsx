@@ -28,54 +28,54 @@ type TalentSection = {
 const talentSections: TalentSection[] = [
   {
     id: 1,
-    number: "[1]",
-    title: "Organic Cultivation",
-    description: "We grow our own lemongrass on family-owned land using sustainable, chemical-free farming practices. Every plant is nurtured with care for maximum purity and potency.",
+    number: "Herbal Tea",
+    title: "Gweel Herbal Lemon Tea – A sip of Himalayan serenity.",
+    description: "Handpicked, sun-dried, and packed with antioxidants for a refreshing, caffeine-free experience.",
     bigImage: "/images/talents/bigImageone.jpg",
-    smallImage: "/images/talents/smallImage5.jpeg",
+    smallImage: "/images/talents/box5.jpeg",
     cardContent: {
-      title: "FARM FRESH",
+      title: "PREMIUM TEA",
       age: "100%",
-      message: "Grown with love and tradition.",
+      message: "Natural calm in every cup.",
     },
   },
   {
     id: 2,
-    number: "[2]",
-    title: "Steam Distillation",
-    description: "Hand-selected leaves are steam-distilled in small batches to preserve maximum freshness, therapeutic properties, and natural aroma. Pure extraction, zero chemicals.",
+    number: "Essential Oil",
+    title: "Lemongrass Oil – The pure essence of the soil.",
+    description: "Steam-distilled to capture the potent, citrusy aroma and therapeutic benefits of mountain-grown lemongrass.",
     bigImage: "/images/talents/bigImagetwo.jpg",
-    smallImage: "/images/talents/smallImage5.jpeg",
+    smallImage: "/images/talents/box6.jpeg",
     cardContent: {
       title: "PURE EXTRACT",
-      age: "Natural",
-      message: "Small-batch perfection.",
+      age: "Potent",
+      message: "For skin, aroma, and wellness.",
     },
   },
   {
     id: 3,
-    number: "[3]",
-    title: "Handcrafted Products",
-    description: "From essential oils to aroma candles and herbal fragrances, each product is handmade with pure plant extracts. No synthetic additives, only nature's best.",
+    number: "Aromatherapy",
+    title: "Scented Oil – Nature’s fragrance for your soul.",
+    description: "Hand-blended floral and herbal notes that uplift your mood and transform your space.",
     bigImage: "/images/talents/bigImagethree.jpg",
-    smallImage: "/images/talents/smallImage5.jpeg",
+    smallImage: "/images/talents/box2.jpeg",
     cardContent: {
-      title: "ARTISAN MADE",
-      age: "Premium",
-      message: "Crafted with care and expertise.",
+      title: "NATURAL SCENT",
+      age: "Fresh",
+      message: "Revitalize your senses.",
     },
   },
   {
     id: 4,
-    number: "[4]",
-    title: "Quality & Wellness",
-    description: "Every product is tested for purity and potency. We deliver therapeutic benefits that help you relax, refresh, and reconnect with nature's healing power.",
+    number: "Complete Set",
+    title: "Full Wellness Collection – The perfect gift of health.",
+    description: "Experience the complete Gweel Herbals range, from soothing teas to healing oils, in one beautifully curated set.",
     bigImage: "/images/talents/bigImagefour.jpg",
-    smallImage: "/images/talents/smallImage5.jpeg",
+    smallImage: "/images/talents/boxone.png",
     cardContent: {
-      title: "CERTIFIED PURE",
-      age: "Tested",
-      message: "Wellness you can trust.",
+      title: "FULL SET",
+      age: "Gift",
+      message: "The ultimate wellness package.",
     },
   },
 ];
@@ -267,6 +267,7 @@ export function Talents() {
 
   return (
     <section
+      id="products"
       ref={sectionRef}
       className="px-4 sm:px-6 lg:pl-8 lg:pr-0 bg-white dark:bg-background overflow-hidden relative"
       style={{ perspective: "1200px" }}
@@ -290,15 +291,15 @@ export function Talents() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          {/* <motion.p
-            className="text-xs mb-1.5"
+          <motion.p
+            className="text-xs mb-1.5 uppercase tracking-widest font-bold text-center"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
             initial={{ opacity: 0, x: -20 }}
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.4, delay: 0.05 }}
           >
-            HOW IT WORKS
-          </motion.p> */}
+            PURE HIMALAYAN
+          </motion.p>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center "
             style={{ color: isDark ? "#FEBE10" : "#000000" }}

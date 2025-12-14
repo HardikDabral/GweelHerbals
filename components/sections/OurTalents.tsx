@@ -17,51 +17,51 @@ type Talent = {
 const talents: Talent[] = [
   {
     id: 8,
-    name: "Essential Oils",
-    category: "Pure & Natural",
-    image: "/images/talents/smallImage3.png",
+    name: "Organic Fields",
+    category: "Sustainable Farming",
+    image: "/images/talents/longImageone.jpeg",
     gridSpan: "col-span-1 md:col-span-2 row-span-1",
   },
   {
     id: 1,
-    name: "Aroma Candles",
+    name: "Curated Gifts",
     category: "Handcrafted",
-    image: "/images/talents/bigImageone.jpg",
+    image: "/images/talents/boxone.png",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 2,
-    name: "Herbal Fragrances",
-    category: "Natural Extracts",
-    image: "/images/talents/bigImagetwo.jpg",
+    name: "Natural Scents",
+    category: "Pure Extracts",
+    image: "/images/talents/box2.jpeg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 9,
-    name: "Wellness Blends",
+    name: "Essential Oils",
     category: "Therapeutic",
-    image: "/images/talents/bigImageThree.jpg",
+    image: "/images/talents/box6.jpeg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 4,
-    name: "Gift Sets",
-    category: "Premium Collection",
-    image: "/images/talents/bigImageFour.jpg",
+    name: "Women Artisans",
+    category: "Community Impact",
+    image: "/images/talents/longImagetwo.jpeg",
     gridSpan: "col-span-1 md:col-span-2 row-span-1",
   },
   {
     id: 6,
-    name: "Room Sprays",
-    category: "Fresh & Uplifting",
-    image: "/images/talents/smallImage3.png",
+    name: "Herbal Teas",
+    category: "Mountain Fresh",
+    image: "/images/talents/box5.jpeg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 10,
-    name: "Diffuser Oils",
+    name: "Holistic Care",
     category: "Aromatherapy",
-    image: "/images/talents/bigImage5.jpg",
+    image: "/images/talents/box4.jpeg",
     gridSpan: "col-span-1 md:col-span-1 row-span-1",
   },
 ];
@@ -240,17 +240,17 @@ export default function OurTalents() {
       <div className="mx-auto overflow-visible max-w-[1440px]">
         {/* Section Header */}
         <div className="mb-12 text-center">
-          {/* <p
-            className="text-xs mb-1.5"
+          <p
+            className="text-xs mb-1.5 uppercase tracking-widest font-bold"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
           >
-            OUR TALENTS
-          </p> */}
+            The Collection
+          </p>
           <h2
             className="text-2xl sm:text-3xl md:text-4xl font-semibold"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
           >
-            Our Pure Product Range
+            Curated for Your Wellness
           </h2>
           <p
             className="mt-3 text-base sm:text-lg max-w-3xl mx-auto"
@@ -276,7 +276,7 @@ export default function OurTalents() {
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
                       <p className="text-white/70 text-xs sm:text-sm mb-1 font-medium">
                         {talent.category}
@@ -314,8 +314,8 @@ export default function OurTalents() {
         <div className="hidden lg:block relative" style={{ perspective: "1000px" }}>
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-6 md:gap-8 auto-rows-fr">
             {talents.map((talent, index) => {
-              // Add empty placeholder before Room Sprays to maintain grid positions
-              const isComedians = talent.id === 6 && talent.name === "Room Sprays";
+              // Add empty placeholder before Herbal Teas to maintain grid positions
+              const isComedians = talent.id === 6 && talent.name === "Herbal Teas";
               return (
                 <React.Fragment key={talent.id}>
                   {isComedians && (
@@ -347,7 +347,7 @@ export default function OurTalents() {
                         />
 
                         {/* Overlay Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/80" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
                         {/* Content */}
                         <motion.div
@@ -398,16 +398,16 @@ export default function OurTalents() {
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Live talent signal
+                Pure Origin
               </p>
               <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
-                <TypewriterText text="See every talent as a live moment, not just another profile card." />
+                <TypewriterText text="Every product tells the story of the land it comes from." />
               </p>
               <p
                 className="text-xs"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Streaming from auditions, shows, and real-world performances.
+                Grown in the pristine air of Pauri Garhwal.
               </p>
             </motion.div>
 
@@ -421,13 +421,13 @@ export default function OurTalents() {
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Casting-ready insights
+                Certified Quality
               </p>
             </motion.div>
           </div>
 
           {/* Quotes on Right Side of Painters Card - Desktop Only */}
-          <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] w-[600px] flex-col items-start gap-6 pointer-events-none">
+          <div className="hidden lg:flex absolute bottom-[50px] left-[calc(51%+0.5rem)] max-w-[600px] flex-col items-start gap-6 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -438,13 +438,13 @@ export default function OurTalents() {
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
               >
-                Visual stories
+                Holistic Wellness
               </p>
               <p
                 className="text-base md:text-lg font-medium leading-relaxed mb-2"
                 style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
               >
-                Moodboards, lookbooks, and reels — all stitched into one living canvas.
+                We blend tradition with purity to nurture your well-being.
               </p>
               <p
                 className="text-xs"
@@ -460,6 +460,7 @@ export default function OurTalents() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-left"
             >
+
               <p
                 className="text-xs mb-1"
                 style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}

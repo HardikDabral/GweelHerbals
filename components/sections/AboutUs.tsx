@@ -13,39 +13,32 @@ type Service = {
 
 const services: Service[] = [
   {
-    id: "organic-farming",
-    title: "Organic Cultivation",
+    id: "the-origin",
+    title: "The Silent Hills",
     description:
-      "Farm-grown lemongrass cultivated on family-owned land using sustainable, chemical-free farming practices for maximum purity.",
+      "Gweel Herbals began in Pauri Garhwal, where silence had replaced laughter. Villagers migrated, leaving fields barren. Then came the pandemic—and the hills opened their arms. Children returned, and old houses lit up again.",
     icon: Leaf,
   },
   {
-    id: "essential-oils",
-    title: "Pure Essential Oils",
+    id: "the-awakening",
+    title: "A New Purpose",
     description:
-      "100% natural lemongrass essential oil, steam-distilled in small batches to preserve freshness, potency, and therapeutic aroma.",
-    icon: Droplets,
-  },
-  {
-    id: "handcrafted-candles",
-    title: "Handcrafted Candles",
-    description:
-      "Artisan aroma candles made with pure plant extracts. No synthetic additives, only natural fragrances that uplift and refresh.",
-    icon: Flame,
-  },
-  {
-    id: "herbal-fragrances",
-    title: "Herbal Fragrances",
-    description:
-      "Naturally extracted fragrances crafted with care. Experience uplifting aromas that help you relax and reconnect with nature.",
+      "Out of homecoming emerged a purely courageous idea: Could abandoned land be reborn? Lemongrass became the answer. Terraces were cleared, soil nurtured, and the first green shoots brought hope and strength back to the village.",
     icon: Sparkles,
   },
   {
-    id: "wellness",
-    title: "Wellness & Lifestyle",
+    id: "farm-to-bottle",
+    title: "From Land to Truth",
     description:
-      "More than products — a lifestyle rooted in earth's purity. Therapeutic benefits that promote relaxation, refresh your space, and support clean living.",
-    icon: Heart,
+      "From traditional steam distillation came pure essential oil. From handpicked leaves came soothing teas. From renewed faith came a brand rooted in truth. Every drop captures the crisp, citrusy aroma of our revival.",
+    icon: Droplets,
+  },
+  {
+    id: "pure-honest-himalayan",
+    title: "Pure. Honest. Himalayan.",
+    description:
+      "We are the collective voice of the hills, preserving heritage so no villager has to leave home. When you choose Gweel Herbals, you support the revival of villages and a future where the Himalayas continue to thrive.",
+    icon: Flame,
   },
 ];
 
@@ -89,19 +82,19 @@ export default function AboutUs() {
   return (
     <section id="about" className={`${sectionBg} mb-20 px-8 sm:px-10 lg:px-16 transition-colors duration-300`}>
       <div className="mx-auto max-w-[1440px] space-y-12">
-        <div className="space-y-3 ">
-          {/* <p
-            className="text-xs sm:text-sm tracking-wider font-medium"
-            style={{ color: "#FEBE10" }}
-          >
-            INTEGRATED DIGITAL SOLUTIONS
-          </p> */}
-          <h1
-            className="text-2xl sm:text-3xl md:text-4xl text-center font-semibold leading-tight"
+        <div className="mb-16 md:mb-24 text-center">
+          <p
+            className="text-xs mb-1.5 uppercase tracking-widest font-bold"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
           >
-            Farm to Bottle Wellness
-          </h1>
+            OUR ORIGIN
+          </p>
+          <h2
+            className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-8 max-w-4xl mx-auto leading-tight"
+            style={{ color: isDark ? "#FEBE10" : "#000000" }}
+          >
+            The Story of Gweel
+          </h2>
           <p
             className="max-w-3xl mx-auto text-base sm:text-lg leading-relaxed text-center"
             style={{ color: isDark ? "#FFFFFF" : "#000000" }}
@@ -110,14 +103,18 @@ export default function AboutUs() {
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-start gap-10 md:gap-20">
-          {/* Left: image placeholder */}
-          <div className="relative w-full max-w-[450px] aspect-square overflow-hidden rounded-[28px] bg-[#e8e6de] shadow-[0_20px_80px_-50px_rgba(0,0,0,0.5)] mx-auto md:mx-0 flex-shrink-0">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_25%,rgba(0,0,0,0.05),transparent_40%),radial-gradient(circle_at_75%_75%,rgba(0,0,0,0.05),transparent_45%)]" />
+        <div className="flex flex-col lg:flex-row items-start gap-10 lg:gap-20">
+          {/* Left: About Us Image */}
+          <div className="relative w-full max-w-[450px] aspect-square overflow-hidden rounded-[28px] bg-[#e8e6de] shadow-[0_20px_80px_-50px_rgba(0,0,0,0.5)] mx-auto lg:mx-0 flex-shrink-0">
+            <img
+              src="/images/talents/aboutUs.jpeg"
+              alt="Gweel Herbals Origin"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
           </div>
 
           {/* Right: hover-reveal cards */}
-          <div className="flex-1 w-full flex flex-col gap-4 md:min-h-[450px] md:max-h-[450px] md:overflow-y-auto md:pr-1">
+          <div className="flex-1 w-full flex flex-col gap-4 lg:min-h-[450px] lg:max-h-[450px] lg:overflow-y-auto lg:pr-1">
             {services.map((service) => {
               const Icon = service.icon;
               const isActive = activeId === service.id;

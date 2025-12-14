@@ -85,13 +85,13 @@ export default function Faq() {
     <section id="faqs" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-10 flex items-center justify-center gap-4">
-          <div className="text-left">
-            {/* <p
-              className="text-xs mb-1.5 tracking-wide uppercase"
+          <div className="text-center">
+            <p
+              className="text-xs mb-1.5 uppercase tracking-widest font-bold"
               style={{ color: isDark ? "#FEBE10" : "#000000" }}
             >
-              Support
-            </p> */}
+              SUPPORT
+            </p>
             <h2
               className="text-2xl sm:text-3xl md:text-4xl font-semibold"
               style={{ color: isDark ? "#FEBE10" : "#000000" }}

@@ -132,12 +132,18 @@ export default function Testimonials() {
     <section id="stories" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
       <div className="mx-auto max-w-[1440px]">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl font-semibold mb-6"
+        <div className="text-center mb-12">
+          <p
+            className="text-xs mb-1.5 uppercase tracking-widest font-bold"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
           >
-            What Our Customers Say
+            COMMUNITY LOVE
+          </p>
+          <h2
+            className="text-2xl sm:text-3xl md:text-4xl font-semibold"
+            style={{ color: isDark ? "#FEBE10" : "#000000" }}
+          >
+            Stories from the Hills
           </h2>
           {/* <motion.button
             whileHover={{ scale: 1.05 }}

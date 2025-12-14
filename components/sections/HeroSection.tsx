@@ -219,7 +219,7 @@ export function HeroSection() {
                   }}
                   aria-label="Explore our pure herbal products"
                 >
-                  <Link href="/products" className="relative z-10">
+                  <Link href="/#products" className="relative z-10">
                     <motion.span
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -257,7 +257,7 @@ export function HeroSection() {
                 variants={itemVariants}
                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <span className="font-bold italic">100%</span> Organic & Chemical-Free
+                <span className="font-bold">100%</span> Organic & Chemical-Free
               </motion.p>
             </motion.div>
           </motion.div>

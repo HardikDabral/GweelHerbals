@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, LogIn, Sun, Moon } from "lucide-react";
+import { Menu, ShoppingCart, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
 
@@ -165,7 +165,9 @@ export function Navbar() {
                   transition={{ duration: 0.3, delay: 0.6 }}
                 >
                   <Link
-                    href="/login"
+                    href="https://www.amazon.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full text-[#1A1A1A] text-sm sm:text-[15px] font-semibold transition-all duration-300 whitespace-nowrap"
                     style={{
                       background: "#FEBE10",
@@ -181,8 +183,8 @@ export function Navbar() {
                       e.currentTarget.style.boxShadow = "0 4px 12px rgba(254, 190, 16, 0.3), 0 0 20px rgba(254, 190, 16, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2)";
                     }}
                   >
-                    <LogIn className="w-4 h-4 sm:w-5 sm:h-5" />
-                    Login
+                    <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+                    Buy on Amazon
                   </Link>
                 </motion.div>
               </motion.div>
@@ -253,15 +255,17 @@ export function Navbar() {
               {/* Login Button */}
               <div className="mt-auto">
                 <Link
-                  href="/login"
+                  href="https://www.amazon.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 w-full px-6 py-3 rounded-full bg-[#FEBE10] text-[#1A1A1A] text-base font-semibold transition-all duration-300"
                   style={{
                     boxShadow: "0 4px 12px rgba(254, 190, 16, 0.3)",
                   }}
                 >
-                  <LogIn className="w-5 h-5" />
-                  Login
+                  <ShoppingCart className="w-5 h-5" />
+                  Buy on Amazon
                 </Link>
               </div>
             </div>
