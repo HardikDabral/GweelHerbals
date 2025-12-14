@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, ShoppingCart, Sun, Moon } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
 
 const navItems = [
@@ -21,15 +21,8 @@ export function Navbar() {
   const [showContent, setShowContent] = useState(false);
   const { theme, toggleTheme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { scrollY } = useScroll();
+  const navTop = useTransform(scrollY, [0, 100], ["2.5rem", "1rem"]);
 
   useEffect(() => {
     const checkTheme = () => {
@@ -79,7 +72,10 @@ export function Navbar() {
 
   return (
     <>
-      <nav className={`fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center transition-all duration-300 ${isScrolled ? "top-4" : "top-10"} sm:top-10`}>
+      <motion.nav
+        style={{ top: navTop }}
+        className="fixed left-1/2 -translate-x-1/2 z-50 w-full max-w-[96%] sm:max-w-[93%] md:max-w-[90%] lg:max-w-[88%] xl:max-w-[1200px] 2xl:max-w-[1300px] px-4 sm:px-6 flex justify-center sm:!top-10"
+      >
         <motion.div
           className="relative flex items-center justify-center lg:justify-between h-16 py-3 pl-4 sm:pl-6 md:pl-8 pr-2 sm:pr-3 rounded-full backdrop-blur-2xl border border-white/20 dark:border-white/20 shadow-xl overflow-hidden"
           style={{
@@ -212,7 +208,7 @@ export function Navbar() {
             </button>
           </div>
         </motion.div>
-      </nav>
+      </motion.nav>
 
       {/* Mobile Sidebar - Slides from Right - OUTSIDE NAV */}
       {isMobileMenuOpen && (

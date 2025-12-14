@@ -134,7 +134,7 @@ export default function AboutUs() {
                     } ${!isDark ? "hover:border-black/20 hover:bg-black/5 focus-visible:border-black/20 focus-visible:bg-black/5" : ""}`}
                   style={{ willChange: isActive ? 'auto' : 'transform, opacity' }}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-start gap-3">
                     <div className={`rounded-full p-2 transition-colors duration-400 ${isDark ? "bg-white/10" : "bg-black/5"}`}>
                       <Icon className={`h-5 w-5 transition-colors duration-400 ${isDark ? "text-amber-400" : "text-black"}`} />
                     </div>
