@@ -139,6 +139,14 @@ function Card3D({ children, className, style, onClick }: { children: React.React
 export function Talents() {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Track scroll position for section animations
   const { scrollYProgress } = useScroll({
@@ -182,6 +190,7 @@ export function Talents() {
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
   const blur = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [10, 0, 0, 8]);
   const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [15, 0, -15]);
+  const filter = useTransform([blur], ([blurVal]) => `blur(${blurVal}px)`);
 
   // Sync theme with DOM on mount and when theme changes
   useEffect(() => {
@@ -275,11 +284,11 @@ export function Talents() {
       <motion.div
         ref={containerRef}
         className="mx-auto overflow-hidden"
-        style={{
+        style={isMobile ? {} : {
           y,
           scale,
           opacity,
-          filter: useTransform([blur], ([blurVal]) => `blur(${blurVal}px)`),
+          filter,
           rotateY,
           transformStyle: "preserve-3d",
         }}
