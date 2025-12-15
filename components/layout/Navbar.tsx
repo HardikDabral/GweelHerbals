@@ -97,7 +97,7 @@ export function Navbar() {
           {/* Mobile: Logo on Left */}
           <div className="lg:hidden">
             <Link href="/" className="text-xl sm:text-2xl font-bold text-white lowercase whitespace-nowrap">
-              talentbuzz
+              Gweel Herbals
             </Link>
           </div>
 
