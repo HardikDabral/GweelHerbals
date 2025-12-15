@@ -96,14 +96,14 @@ export function Navbar() {
         >
           {/* Mobile: Logo on Left */}
           <div className="lg:hidden">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-white lowercase whitespace-nowrap">
+            <Link href="/" className="text-xl sm:text-2xl font-bold text-white whitespace-nowrap">
               Gweel Herbals
             </Link>
           </div>
 
           {/* Desktop: Center - Brand Name (always centered) */}
           <div className="hidden lg:block absolute left-1/2 -translate-x-1/2">
-            <Link href="/" className="text-xl sm:text-2xl font-bold text-white lowercase whitespace-nowrap">
+            <Link href="/" className="text-xl sm:text-2xl font-bold text-white whitespace-nowrap">
               Gweel Herbals
             </Link>
           </div>
