@@ -300,7 +300,7 @@ export default function OurTalents() {
           </div>
 
           {/* Carousel Dots */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-2 mt-16">
             {talents.map((_, index) => (
               <button
                 key={index}
@@ -407,16 +407,16 @@ export default function OurTalents() {
                   className="text-xs mb-1"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Pure Origin
+                  Thoughtful Packaging
                 </p>
                 <p className="text-base md:text-lg font-medium leading-relaxed mb-2">
-                  <TypewriterText text="Every product tells the story of the land it comes from." />
+                  <TypewriterText text="Eco-conscious packaging that honors both nature and your purchase." />
                 </p>
                 <p
                   className="text-xs"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Grown in the pristine air of Pauri Garhwal.
+                  Every gift box includes a hand-written note.
                 </p>
               </motion.div>
 
@@ -426,12 +426,18 @@ export default function OurTalents() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-left"
               >
-                <p
+                {/* <p
                   className="text-xs mb-1"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Certified Quality
+                  Custom Branding
                 </p>
+                <p
+                  className="text-base md:text-lg font-medium leading-relaxed mb-2"
+                  style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
+                >
+                  Corporate gifting with personalized branding available.
+                </p> */}
               </motion.div>
             </div>
 
@@ -447,19 +453,19 @@ export default function OurTalents() {
                   className="text-xs mb-1"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Holistic Wellness
+                  Careful Shipping
                 </p>
                 <p
                   className="text-base md:text-lg font-medium leading-relaxed mb-2"
                   style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
                 >
-                  We blend tradition with purity to nurture your well-being.
+                  Protective packaging and temperature-aware dispatch for delicate products.
                 </p>
                 <p
                   className="text-xs"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Shareable in a link, bookable in a click.
+                  Your purchase arrives exactly as crafted.
                 </p>
               </motion.div>
 
@@ -469,24 +475,23 @@ export default function OurTalents() {
                 transition={{ duration: 0.6, delay: 0.4 }}
                 className="text-left"
               >
-
                 <p
                   className="text-xs mb-1"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  Growth over time
+                  Personal Touch
                 </p>
                 <p
                   className="text-base md:text-lg font-medium leading-relaxed mb-2"
                   style={{ color: isDark ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.7)" }}
                 >
-                  Track how every set, show, and collab levels up your talent profile.
+                  Hand-written notes in every gift box, because details matter.
                 </p>
                 <p
                   className="text-xs"
                   style={{ color: isDark ? "rgba(255,255,255,0.5)" : "rgba(0,0,0,0.5)" }}
                 >
-                  From first booking to world tour — see the line, not just the dots.
+                  Luxury is in the experience, not just the product.
                 </p>
               </motion.div>
             </div>

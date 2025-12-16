@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Eye } from "lucide-react";
+import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView } from "framer-motion";
@@ -15,11 +15,17 @@ type TalentSection = {
   description: string;
   bigImage: string;
   smallImage: string;
+  luxuryProofPoints?: string[];
   cardContent: {
     title?: string;
     subtitle?: string;
     age?: string;
-    message?: string;
+    price?: {
+      current: number;
+      original: number;
+      discount: number;
+      unit: string;
+    };
     items?: Array<{ score: string; label: string } | string>;
     recommendations?: Array<{ category: string; item: string }>;
   };
@@ -30,52 +36,96 @@ const talentSections: TalentSection[] = [
     id: 1,
     number: "Herbal Tea",
     title: "Gweel Herbal Lemon Tea – A sip of Himalayan serenity.",
-    description: "Handpicked, sun-dried, and packed with antioxidants for a refreshing, caffeine-free experience.",
+    description: "Handcrafted in micro-batches in Pauri Garhwal. Limited seasonal harvest, sun-dried at high altitude for peak potency and flavor.",
     bigImage: "/images/talents/bigImageone.jpg",
     smallImage: "/images/talents/box5.jpeg",
+    luxuryProofPoints: [
+      "Limited seasonal harvest",
+      "Single-origin Himalayan lemongrass",
+      "Sun-dried at high altitude",
+      "Handpicked in micro-batches"
+    ],
     cardContent: {
       title: "PREMIUM TEA",
       age: "100%",
-      message: "Natural calm in every cup.",
+      price: {
+        current: 360,
+        original: 400,
+        discount: 35,
+        unit: "per 100 gm",
+      },
     },
   },
   {
     id: 2,
     number: "Essential Oil",
-    title: "Lemongrass Oil – The pure essence of the soil.",
-    description: "Steam-distilled to capture the potent, citrusy aroma and therapeutic benefits of mountain-grown lemongrass.",
+    title: "Lemongrass Essential Oil – The pure essence of the soil.",
+    description: "Handcrafted in micro-batches in Pauri Garhwal. Small-batch steam distillation captures the pure essence of mountain-grown lemongrass.",
     bigImage: "/images/talents/bigImagetwo.jpg",
     smallImage: "/images/talents/box6.jpeg",
+    luxuryProofPoints: [
+      "Small-batch steam distillation",
+      "Single-origin Himalayan lemongrass",
+      "Handcrafted in Pauri Garhwal",
+      "Limited seasonal harvest"
+    ],
     cardContent: {
       title: "PURE EXTRACT",
       age: "Potent",
-      message: "For skin, aroma, and wellness.",
+      price: {
+        current: 360,
+        original: 400,
+        discount: 35,
+        unit: "per 30 ml",
+      },
     },
   },
   {
     id: 3,
     number: "Aromatherapy",
-    title: "Scented Oil – Nature’s fragrance for your soul.",
-    description: "Hand-blended floral and herbal notes that uplift your mood and transform your space.",
+    title: "Scented Oil – Nature's fragrance for your soul.",
+    description: "Hand-poured candles in reusable glass, handcrafted in micro-batches in Pauri Garhwal. Hand-blended floral notes for spa-like calm.",
     bigImage: "/images/talents/bigImagethree.jpg",
     smallImage: "/images/talents/box2.jpeg",
+    luxuryProofPoints: [
+      "Hand-poured candles in reusable glass",
+      "Small-batch hand-blending",
+      "Single-origin Himalayan botanicals",
+      "Limited seasonal harvest"
+    ],
     cardContent: {
       title: "NATURAL SCENT",
       age: "Fresh",
-      message: "Revitalize your senses.",
+      price: {
+        current: 360,
+        original: 400,
+        discount: 35,
+        unit: "per 100 gm",
+      },
     },
   },
   {
     id: 4,
     number: "Complete Set",
     title: "Full Wellness Collection – The perfect gift of health.",
-    description: "Experience the complete Gweel Herbals range, from soothing teas to healing oils, in one beautifully curated set.",
+    description: "Handcrafted in micro-batches in Pauri Garhwal. A curated collection of our finest small-batch products, each crafted with Himalayan precision.",
     bigImage: "/images/talents/bigImagefour.jpg",
     smallImage: "/images/talents/boxone.png",
+    luxuryProofPoints: [
+      "Small-batch curation",
+      "Single-origin Himalayan ingredients",
+      "Handcrafted in Pauri Garhwal",
+      "Limited seasonal availability"
+    ],
     cardContent: {
       title: "FULL SET",
       age: "Gift",
-      message: "The ultimate wellness package.",
+      price: {
+        current: 360,
+        original: 400,
+        discount: 35,
+        unit: "per 100 gm",
+      },
     },
   },
 ];
@@ -360,11 +410,30 @@ export function Talents() {
                         {section.title}
                       </h3>
                       <p
-                        className="text-xs sm:text-sm leading-relaxed max-w-[400px]"
+                        className="text-xs sm:text-sm leading-relaxed max-w-[400px] mb-3"
                         style={{ color: isDark ? "#ffffff" : "#000000" }}
                       >
                         {section.description}
                       </p>
+                      {/* {section.luxuryProofPoints && section.luxuryProofPoints.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2">
+                          {section.luxuryProofPoints.map((point, idx) => (
+                            <span
+                              key={idx}
+                              className="text-[9px] sm:text-[10px] px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full border"
+                              style={{
+                                color: isDark ? "#FEBE10" : "#000000",
+                                borderColor: isDark ? "rgba(254, 190, 16, 0.3)" : "rgba(0, 0, 0, 0.2)",
+                                backgroundColor: isDark ? "rgba(254, 190, 16, 0.1)" : "rgba(0, 0, 0, 0.05)",
+                                fontFamily: "inherit",
+                                fontWeight: 500,
+                              }}
+                            >
+                              {point}
+                            </span>
+                          ))}
+                        </div>
+                      )} */}
                     </div>
 
                     {/* Middle: Big Image (Relative) */}
@@ -379,7 +448,7 @@ export function Talents() {
 
                       {/* Bottom: Small Image Card (Absolute with translate - centered) */}
                       <div
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[35%] w-full max-w-[260px] sm:max-w-[300px] md:max-w-[340px] px-1.5"
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[35%] w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] px-1.5"
                         style={{ perspective: "1000px" }}
                       >
                         <Card3D
@@ -403,14 +472,14 @@ export function Talents() {
                                   </span>
                                 )}
                                 <button
-                                  className="text-white text-xs sm:text-sm font-semibold hover:text-[#FEBE10] transition-colors flex items-center gap-1"
+                                  className="bg-transparent text-white border border-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full hover:bg-gradient-to-r hover:from-[#FEBE10] hover:to-[#FFD700] hover:text-black hover:border-transparent hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-1.5"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    console.log('View details clicked:', section.id);
+                                    console.log('Add to bag clicked:', section.id);
                                   }}
                                 >
-                                  View
-                                  <Eye className="w-3 h-3" />
+                                  <span>Add to Bag</span>
+                                  <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                 </button>
                               </div>
                             )}
@@ -441,10 +510,27 @@ export function Talents() {
                               </div>
                             )}
 
-                            {section.cardContent.message && (
-                              <p className="text-white/80 text-[9px] sm:text-[10px] mt-1.5 group-hover:text-white transition-colors">
-                                {section.cardContent.message}
-                              </p>
+                            {section.cardContent.price && (
+                              <div className="mt-2 space-y-1" style={{ transform: "translateZ(30px)" }}>
+                                <div className="flex items-baseline gap-2 flex-wrap">
+                                  <div className="flex items-baseline gap-1">
+                                    <span className="text-white text-sm sm:text-base font-bold tracking-tight">
+                                      ₹{section.cardContent.price.current}
+                                    </span>
+                                    <span className="text-white/70 text-[9px] sm:text-[10px] font-medium">
+                                      {section.cardContent.price.unit}
+                                    </span>
+                                  </div>
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="text-white/50 text-[9px] sm:text-[10px] line-through font-medium">
+                                      ₹{section.cardContent.price.original}
+                                    </span>
+                                    <span className="bg-gradient-to-r from-[#FEBE10] to-[#FFD700] text-[8px] sm:text-[9px] font-bold text-black px-1.5 py-0.5 rounded-full shadow-lg">
+                                      {section.cardContent.price.discount}% OFF
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
                             )}
 
                             {section.cardContent.recommendations && (

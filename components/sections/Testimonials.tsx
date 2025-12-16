@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
     },
     date: "DEC 5, 2024",
     time: "10:30 AM",
-    type: "post",
+    type: "shared",
     platform: "instagram",
   },
   {
@@ -46,7 +46,7 @@ const testimonials: Testimonial[] = [
     },
     date: "NOV 18, 2024",
     time: "2:45 PM",
-    type: "post",
+    type: "shared",
     platform: "x",
   },
   {
@@ -82,7 +82,7 @@ const testimonials: Testimonial[] = [
     },
     date: "DEC 1, 2024",
     time: "5:20 PM",
-    type: "post",
+    type: "shared",
     platform: "instagram",
   },
   {

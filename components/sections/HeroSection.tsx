@@ -147,7 +147,7 @@ export function HeroSection() {
             >
               {/* Title with word-by-word animation */}
               <motion.h1
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 sm:mb-6 leading-[1.1]"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-4 sm:mb-6 leading-[1.1]"
                 style={{
                   color: "#FFFFFF",
                   textShadow: "0 4px 20px rgba(0,0,0,0.3)",
@@ -159,7 +159,7 @@ export function HeroSection() {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                  Pure Nature,
+                  Pure Himalayan Lemongrass
                 </motion.span>
                 <br />
                 <motion.span
@@ -168,7 +168,7 @@ export function HeroSection() {
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.8, delay: 0.7 }}
                 >
-                  Crafted with Care
+                  Rituals for Discerning Homes
                 </motion.span>
               </motion.h1>
 
@@ -178,11 +178,11 @@ export function HeroSection() {
                 variants={itemVariants}
                 transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                Farm-grown lemongrass, steam-distilled to perfection.
+                Transform quiet Himalayan evenings into spa-like calm with slow rituals.
                 <br />
-                100% organic essential oils, handcrafted candles, and pure herbal fragrances.
+                Limited-batch distillation, handpicked from mountain fields.
                 <br />
-                Experience the true essence of nature, from our fields to your home.
+                Crafted for those who seek more than mass-produced wellness.
               </motion.p>
 
               {/* Button with scale and glow effect */}
