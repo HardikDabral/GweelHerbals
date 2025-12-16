@@ -300,7 +300,7 @@ export default function OurTalents() {
           </div>
 
           {/* Carousel Dots */}
-          <div className="flex justify-center gap-2 mt-16">
+          <div className="flex justify-center gap-2 mt-6">
             {talents.map((_, index) => (
               <button
                 key={index}

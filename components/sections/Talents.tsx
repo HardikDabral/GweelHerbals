@@ -566,7 +566,7 @@ export function Talents() {
           </div>
 
           {/* Navigation Dots */}
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 md:mt-8 mt-0">
             {talentSections.map((_, index) => (
               <button
                 key={index}
