@@ -244,7 +244,7 @@ export default function OurTalents() {
   }, []);
 
   return (
-    <section id="why-us" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background overflow-visible">
+    <section id="why-us" className={`py-16 px-4 sm:px-6 lg:px-8 overflow-visible ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`}>
       <div className="mx-auto overflow-visible max-w-[1440px]">
         {/* Section Header */}
         <div className="mb-12 text-center">

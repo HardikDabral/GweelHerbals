@@ -72,7 +72,7 @@ export default function AboutUs() {
     return () => observer.disconnect();
   }, [theme]);
 
-  const sectionBg = "bg-white dark:bg-background text-black dark:text-white";
+  const sectionBg = isDark ? "bg-[#1A1A1A] text-white" : "bg-white text-black";
   const cardActive =
     isDark ? "border-white/30 bg-white/10 shadow-[0_25px_90px_-55px_rgba(0,0,0,0.9)]" : "border-black/20 bg-black/5 shadow-[0_20px_70px_-60px_rgba(0,0,0,0.35)]";
   const cardIdle =

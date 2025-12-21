@@ -129,7 +129,7 @@ export default function Testimonials() {
   }, [theme]);
 
   return (
-    <section id="stories" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
+    <section id="stories" className={`py-16 px-4 sm:px-6 lg:px-8 ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`}>
       <div className="mx-auto max-w-[1440px]">
         {/* Header */}
         <div className="text-center mb-12">
@@ -307,7 +307,10 @@ export default function Testimonials() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="hidden lg:block absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t from-white dark:from-background via-white/60 dark:via-background/60 to-transparent pointer-events-none"
+              className={`hidden lg:block absolute bottom-0 left-0 right-0 h-80 bg-gradient-to-t pointer-events-none ${isDark
+                  ? "from-[#1A1A1A] via-[#1A1A1A]/60 to-transparent"
+                  : "from-white via-white/60 to-transparent"
+                }`}
             />
           )}
         </div>

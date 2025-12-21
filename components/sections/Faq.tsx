@@ -82,7 +82,7 @@ export default function Faq() {
   const textColor = isDark ? "#ffffff" : "#000000";
 
   return (
-    <section id="faqs" className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-background">
+    <section id="faqs" className={`py-16 px-4 sm:px-6 lg:px-8 ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`}>
       <div className="mx-auto max-w-[1440px]">
         <div className="mb-10 flex items-center justify-center gap-4">
           <div className="text-center">

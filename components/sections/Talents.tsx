@@ -7,6 +7,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
+import { getShopifyCheckoutUrl, getShopifyProductUrl } from "@/lib/utils/shopify";
 
 type TalentSection = {
   id: number;
@@ -15,6 +16,8 @@ type TalentSection = {
   description: string;
   bigImage: string;
   smallImage: string;
+  shopifyVariantId?: string;
+  productHandle?: string;
   luxuryProofPoints?: string[];
   cardContent: {
     title?: string;
@@ -39,6 +42,8 @@ const talentSections: TalentSection[] = [
     description: "Handcrafted in micro-batches in Pauri Garhwal. Limited seasonal harvest, sun-dried at high altitude for peak potency and flavor.",
     bigImage: "/images/talents/bigImageone.jpg",
     smallImage: "/images/talents/box5.jpeg",
+    shopifyVariantId: "50106538787173", // Updated from User URL
+    productHandle: "gweel-herbals-pure-dried-lemongrass-tea-100g",
     luxuryProofPoints: [
       "Limited seasonal harvest",
       "Single-origin Himalayan lemongrass",
@@ -63,6 +68,8 @@ const talentSections: TalentSection[] = [
     description: "Handcrafted in micro-batches in Pauri Garhwal. Small-batch steam distillation captures the pure essence of mountain-grown lemongrass.",
     bigImage: "/images/talents/bigImagetwo.jpg",
     smallImage: "/images/talents/box6.jpeg",
+    shopifyVariantId: "YOUR_VARIANT_ID_2",
+    productHandle: "gweel-herbals-signature-lemongrass-essential-oil-100-pure-natural-30ml",
     luxuryProofPoints: [
       "Small-batch steam distillation",
       "Single-origin Himalayan lemongrass",
@@ -87,6 +94,7 @@ const talentSections: TalentSection[] = [
     description: "Hand-poured candles in reusable glass, handcrafted in micro-batches in Pauri Garhwal. Hand-blended floral notes for spa-like calm.",
     bigImage: "/images/talents/bigImagethree.jpg",
     smallImage: "/images/talents/box2.jpeg",
+    shopifyVariantId: "YOUR_VARIANT_ID_3",
     luxuryProofPoints: [
       "Hand-poured candles in reusable glass",
       "Small-batch hand-blending",
@@ -111,6 +119,7 @@ const talentSections: TalentSection[] = [
     description: "Handcrafted in micro-batches in Pauri Garhwal. A curated collection of our finest small-batch products, each crafted with Himalayan precision.",
     bigImage: "/images/talents/bigImagefour.jpg",
     smallImage: "/images/talents/boxone.png",
+    shopifyVariantId: "YOUR_VARIANT_ID_4",
     luxuryProofPoints: [
       "Small-batch curation",
       "Single-origin Himalayan ingredients",
@@ -128,6 +137,31 @@ const talentSections: TalentSection[] = [
       },
     },
   },
+  {
+    id: 5,
+    number: "Travel Wellness",
+    title: "Car Air Diffuser – Serenity for the road.",
+    description: "Handcrafted in Pauri Garhwal. A compact, natural way to bring the calming scent of Himalayan lemongrass to your daily commute.",
+    bigImage: "/images/talents/bigImagefive.jpg",
+    smallImage: "/images/talents/carDiffuser.jpeg",
+    shopifyVariantId: "YOUR_VARIANT_ID_5",
+    luxuryProofPoints: [
+      "Natural evaporation diffusion",
+      "Single-origin Himalayan lemongrass",
+      "Handcrafted in Pauri Garhwal",
+      "Chemical-free fragrance"
+    ],
+    cardContent: {
+      title: "ON THE GO",
+      age: "Travel",
+      price: {
+        current: 350,
+        original: 450,
+        discount: 22,
+        unit: "per piece",
+      },
+    },
+  },
 ];
 
 // 3D Card Component with mouse tracking
@@ -139,8 +173,8 @@ function Card3D({ children, className, style, onClick }: { children: React.React
   const mouseXSpring = useSpring(x, { stiffness: 400, damping: 80 });
   const mouseYSpring = useSpring(y, { stiffness: 400, damping: 80 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["20deg", "-20deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-20deg", "20deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -328,7 +362,7 @@ export function Talents() {
     <section
       id="products"
       ref={sectionRef}
-      className="px-4 sm:px-6 lg:pl-8 lg:pr-0 bg-white dark:bg-background overflow-hidden relative"
+      className={`px-4 sm:px-6 lg:pl-8 lg:pr-0 overflow-hidden relative ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`}
       style={{ perspective: "1200px" }}
     >
       <motion.div
@@ -475,10 +509,18 @@ export function Talents() {
                                   className="bg-transparent text-white border border-white text-[10px] sm:text-xs font-bold px-3 sm:px-4 py-1 sm:py-1.5 rounded-full hover:bg-gradient-to-r hover:from-[#FEBE10] hover:to-[#FFD700] hover:text-black hover:border-transparent hover:shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-1.5"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    console.log('Add to bag clicked:', section.id);
+                                    if (section.productHandle) {
+                                      const url = getShopifyProductUrl(section.productHandle, section.shopifyVariantId);
+                                      window.location.href = url;
+                                    } else if (section.shopifyVariantId) {
+                                      const url = getShopifyCheckoutUrl(section.shopifyVariantId);
+                                      window.location.href = url;
+                                    } else {
+                                      console.log('Add to bag clicked (no variant ID):', section.id);
+                                    }
                                   }}
                                 >
-                                  <span>Add to Bag</span>
+                                  <span>{section.productHandle || section.shopifyVariantId ? 'Buy Now' : 'Add to Bag'}</span>
                                   <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                 </button>
                               </div>
@@ -553,7 +595,7 @@ export function Talents() {
                               src={section.smallImage}
                               alt={section.title}
                               fill
-                              className="object-cover object-top"
+                              className={`${section.id === 5 ? "object-cover object-bottom" : "object-cover object-top"}`}
                             />
                           </div>
                         </Card3D>
