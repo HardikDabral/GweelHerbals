@@ -30,7 +30,7 @@ const faqs: FaqItem[] = [
   {
     question: "What products does Gweel Herbal offer?",
     answer:
-      "We offer a complete range of lemongrass-based wellness products including pure essential oils, handcrafted aroma candles, herbal fragrances, room sprays, diffuser oils, and premium gift sets. All products are 100% natural and therapeutic.",
+      "We offer an expanded range of premium wellness products. While our Lemongrass oil remains our hero product, we now feature a diverse collection of essential oils including Orange, Lavender, Raspberry, Ocean Breeze, and Purple Oud. Our range also notably includes car diffusers, handcrafted aroma candles, room sprays, and exclusive gift sets. All products are 100% natural and therapeutic.",
   },
   {
     question: "How should I use lemongrass essential oil?",
