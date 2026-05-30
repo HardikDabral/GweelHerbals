@@ -5,166 +5,13 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useInView } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useThemeStore } from "@/lib/store/useThemeStore";
-import { getShopifyCheckoutUrl, getShopifyProductUrl } from "@/lib/utils/shopify";
+import { useShopifyProducts } from "@/lib/hooks/useShopifyProducts";
+import { type TalentSection } from "@/lib/data/products";
+import { getShopifyProductUrl } from "@/lib/utils/shopify";
 
-type TalentSection = {
-  id: number;
-  number: string;
-  title: string;
-  description: string;
-  bigImage: string;
-  smallImage: string;
-  shopifyVariantId?: string;
-  productHandle?: string;
-  luxuryProofPoints?: string[];
-  cardContent: {
-    title?: string;
-    subtitle?: string;
-    age?: string;
-    price?: {
-      current: number;
-      original: number;
-      discount: number;
-      unit: string;
-    };
-    items?: Array<{ score: string; label: string } | string>;
-    recommendations?: Array<{ category: string; item: string }>;
-  };
-};
-
-const talentSections: TalentSection[] = [
-  {
-    id: 1,
-    number: "Herbal Tea",
-    title: "Gweel Herbal Lemon Tea – A sip of Himalayan serenity.",
-    description: "Handcrafted in micro-batches in Pauri Garhwal. Limited seasonal harvest, sun-dried at high altitude for peak potency and flavor.",
-    bigImage: "/images/talents/bigImageone.jpg",
-    smallImage: "/images/talents/box5.jpeg",
-    shopifyVariantId: "50106538787173", // Updated from User URL
-    productHandle: "gweel-herbals-pure-dried-lemongrass-tea-100g",
-    luxuryProofPoints: [
-      "Limited seasonal harvest",
-      "Single-origin Himalayan lemongrass",
-      "Sun-dried at high altitude",
-      "Handpicked in micro-batches"
-    ],
-    cardContent: {
-      title: "PREMIUM TEA",
-      age: "100%",
-      price: {
-        current: 360,
-        original: 400,
-        discount: 35,
-        unit: "per 100 gm",
-      },
-    },
-  },
-  {
-    id: 2,
-    number: "Essential Oil",
-    title: "Lemongrass Essential Oil – The pure essence of the soil.",
-    description: "Handcrafted in micro-batches in Pauri Garhwal. Small-batch steam distillation captures the pure essence of mountain-grown lemongrass.",
-    bigImage: "/images/talents/bigImagetwo.jpg",
-    smallImage: "/images/talents/box6.jpeg",
-    shopifyVariantId: "YOUR_VARIANT_ID_2",
-    productHandle: "gweel-herbals-signature-lemongrass-essential-oil-100-pure-natural-30ml",
-    luxuryProofPoints: [
-      "Small-batch steam distillation",
-      "Single-origin Himalayan lemongrass",
-      "Handcrafted in Pauri Garhwal",
-      "Limited seasonal harvest"
-    ],
-    cardContent: {
-      title: "PURE EXTRACT",
-      age: "Potent",
-      price: {
-        current: 360,
-        original: 400,
-        discount: 35,
-        unit: "per 30 ml",
-      },
-    },
-  },
-  {
-    id: 3,
-    number: "Aromatherapy",
-    title: "Scented Oil – Nature's fragrance for your soul.",
-    description: "Hand-poured candles in reusable glass, handcrafted in micro-batches in Pauri Garhwal. Hand-blended floral notes for spa-like calm.",
-    bigImage: "/images/talents/bigImagethree.jpg",
-    smallImage: "/images/talents/box2.jpeg",
-    shopifyVariantId: "YOUR_VARIANT_ID_3",
-    luxuryProofPoints: [
-      "Hand-poured candles in reusable glass",
-      "Small-batch hand-blending",
-      "Single-origin Himalayan botanicals",
-      "Limited seasonal harvest"
-    ],
-    cardContent: {
-      title: "NATURAL SCENT",
-      age: "Fresh",
-      price: {
-        current: 360,
-        original: 400,
-        discount: 35,
-        unit: "per 100 gm",
-      },
-    },
-  },
-  {
-    id: 4,
-    number: "Complete Set",
-    title: "Full Wellness Collection – The perfect gift of health.",
-    description: "Handcrafted in micro-batches in Pauri Garhwal. A curated collection of our finest small-batch products, each crafted with Himalayan precision.",
-    bigImage: "/images/talents/bigImagefour.jpg",
-    smallImage: "/images/talents/boxone.png",
-    shopifyVariantId: "YOUR_VARIANT_ID_4",
-    luxuryProofPoints: [
-      "Small-batch curation",
-      "Single-origin Himalayan ingredients",
-      "Handcrafted in Pauri Garhwal",
-      "Limited seasonal availability"
-    ],
-    cardContent: {
-      title: "FULL SET",
-      age: "Gift",
-      price: {
-        current: 360,
-        original: 400,
-        discount: 35,
-        unit: "per 100 gm",
-      },
-    },
-  },
-  {
-    id: 5,
-    number: "Travel Wellness",
-    title: "Car Air Diffuser – Serenity for the road.",
-    description: "Handcrafted in Pauri Garhwal. A compact, natural way to bring the calming scent of Himalayan lemongrass to your daily commute.",
-    bigImage: "/images/talents/bigImagefive.jpg",
-    smallImage: "/images/talents/carDiffuser.jpeg",
-    shopifyVariantId: "YOUR_VARIANT_ID_5",
-    luxuryProofPoints: [
-      "Natural evaporation diffusion",
-      "Single-origin Himalayan lemongrass",
-      "Handcrafted in Pauri Garhwal",
-      "Chemical-free fragrance"
-    ],
-    cardContent: {
-      title: "ON THE GO",
-      age: "Travel",
-      price: {
-        current: 350,
-        original: 450,
-        discount: 22,
-        unit: "per piece",
-      },
-    },
-  },
-];
-
-// 3D Card Component with mouse tracking
+// 3D Card Component with mouse tracking for wobble effect
 function Card3D({ children, className, style, onClick }: { children: React.ReactNode; className?: string; style?: React.CSSProperties; onClick?: () => void }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -203,11 +50,6 @@ function Card3D({ children, className, style, onClick }: { children: React.React
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      initial={{ scale: 0.95, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
       style={{
         rotateX,
         rotateY,
@@ -221,6 +63,7 @@ function Card3D({ children, className, style, onClick }: { children: React.React
 }
 
 export function Talents() {
+  const { products } = useShopifyProducts();
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(true);
@@ -231,15 +74,6 @@ export function Talents() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  // Track scroll position for section animations
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Check if section is in view
-  const isInView = useInView(sectionRef, { margin: "-100px", once: false });
 
   const [autoplay] = useState(() =>
     Autoplay({ delay: 2000, stopOnInteraction: false, stopOnMouseEnter: true })
@@ -266,15 +100,6 @@ export function Talents() {
 
   const { theme } = useThemeStore();
   const [isDark, setIsDark] = useState(false);
-
-  // Scroll-based transforms - different from HeroSection
-  // Instead of 3D rotation, we use slide and scale effects
-  const y = useTransform(scrollYProgress, [0, 0.5, 1], [100, 0, -100]);
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.8, 1, 1, 0.9]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.3]);
-  const blur = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [10, 0, 0, 8]);
-  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [15, 0, -15]);
-  const filter = useTransform([blur], ([blurVal]) => `blur(${blurVal}px)`);
 
   // Sync theme with DOM on mount and when theme changes
   useEffect(() => {
@@ -363,71 +188,38 @@ export function Talents() {
       id="products"
       ref={sectionRef}
       className={`px-4 sm:px-6 lg:pl-8 lg:pr-0 overflow-hidden relative ${isDark ? "bg-[#1A1A1A]" : "bg-white"}`}
-      style={{ perspective: "1200px" }}
     >
-      <motion.div
+      <div
         ref={containerRef}
         className="mx-auto overflow-hidden"
-        style={isMobile ? {} : {
-          y,
-          scale,
-          opacity,
-          filter,
-          rotateY,
-          transformStyle: "preserve-3d",
-        }}
       >
         {/* Section Header */}
-        <motion.div
-          className="mb-6"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-        >
-          <motion.p
+        <div className="mb-6">
+          <p
             className="text-xs mb-1.5 uppercase tracking-widest font-bold text-center"
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 0.4, delay: 0.05 }}
           >
             PURE HIMALAYAN
-          </motion.p>
-          <motion.h2
+          </p>
+          <h2
             className="text-2xl sm:text-3xl md:text-4xl font-semibold text-center "
             style={{ color: isDark ? "#FEBE10" : "#000000" }}
-            initial={{ opacity: 0, x: -20 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-            transition={{ duration: 0.4, delay: 0.1 }}
           >
             From Farm to Bottle
-          </motion.h2>
-        </motion.div>
+          </h2>
+        </div>
 
         {/* Carousel Container */}
-        <motion.div
-          className="relative"
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-        >
+        <div className="relative">
           <div className="overflow-hidden pb-24 pt-8 sm:pb-28" ref={emblaRef}>
             <div className="flex">
-              {talentSections.map((section: TalentSection, index: number) => (
+              {products.map((section: TalentSection, index: number) => (
                 <div
                   key={section.id}
                   className="flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_40%] min-w-0 md:pl-4 lg:pl-6"
                 >
-                  <motion.div
+                  <div
                     className="flex flex-col pb-16 sm:pb-20 h-full"
-                    initial={{ opacity: 0, y: 50, rotateX: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : { opacity: 0, y: 50, rotateX: 20 }}
-                    transition={{
-                      duration: 0.5,
-                      delay: 0.2 + index * 0.08,
-                      ease: [0.25, 0.46, 0.45, 0.94]
-                    }}
-                    style={{ transformStyle: "preserve-3d" }}
                   >
                     {/* Top: Text Div */}
                     <div className="mb-2.5">
@@ -489,8 +281,9 @@ export function Talents() {
                           className="relative w-full aspect-square rounded-xl overflow-hidden backdrop-blur-xl border border-white/10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.7)] flex flex-col cursor-pointer group"
                           style={{ transformStyle: "preserve-3d" }}
                           onClick={() => {
-                            // Handle card click - you can navigate or show details
-                            console.log('Card clicked:', section.id);
+                            if (section.productHandle) {
+                              window.location.href = getShopifyProductUrl(section.productHandle, section.shopifyVariantId);
+                            }
                           }}
                         >
                           {/* Top: Text Content with Transparent Background */}
@@ -510,17 +303,11 @@ export function Talents() {
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     if (section.productHandle) {
-                                      const url = getShopifyProductUrl(section.productHandle, section.shopifyVariantId);
-                                      window.location.href = url;
-                                    } else if (section.shopifyVariantId) {
-                                      const url = getShopifyCheckoutUrl(section.shopifyVariantId);
-                                      window.location.href = url;
-                                    } else {
-                                      console.log('Add to bag clicked (no variant ID):', section.id);
+                                      window.location.href = getShopifyProductUrl(section.productHandle, section.shopifyVariantId);
                                     }
                                   }}
                                 >
-                                  <span>{section.productHandle || section.shopifyVariantId ? 'Buy Now' : 'Add to Bag'}</span>
+                                  <span>View Details</span>
                                   <ShoppingBag className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                 </button>
                               </div>
@@ -601,7 +388,7 @@ export function Talents() {
                         </Card3D>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -609,7 +396,7 @@ export function Talents() {
 
           {/* Navigation Dots */}
           <div className="flex justify-center gap-2 md:mt-8 mt-0">
-            {talentSections.map((_, index) => (
+            {products.map((_, index) => (
               <button
                 key={index}
                 onClick={() => scrollTo(index)}
@@ -624,8 +411,8 @@ export function Talents() {
               />
             ))}
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

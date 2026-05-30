@@ -8,9 +8,10 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { useThemeStore } from "@/lib/store/useThemeStore";
 
 const navItems = [
+  { href: "/shop", label: "Shop" },
   { href: "/#about", label: "About Us" },
   { href: "/#stories", label: "Stories" },
-  { href: "/#why-us", label: "Why Us" },
+  // { href: "/#why-us", label: "Why Us" },
   { href: "/#faqs", label: "FAQs" },
 ];
 
@@ -198,6 +199,18 @@ export function Navbar() {
 
           {/* Mobile: Theme Toggle & Burger Icon on Right */}
           <div className="lg:hidden flex items-center gap-2">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20 transition-all"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+            </button>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -256,6 +269,30 @@ export function Navbar() {
                   </Link>
                 ))}
               </nav>
+
+              {/* Theme Toggle Button */}
+              <div className="mb-6">
+                <button
+                  onClick={toggleTheme}
+                  className={`flex items-center justify-center gap-2 w-full px-6 py-3 rounded-full border transition-all duration-300 ${isDark
+                    ? 'bg-white/10 border-white/20 text-white hover:bg-white/20'
+                    : 'bg-black/5 border-black/10 text-black hover:bg-black/10'
+                    }`}
+                  aria-label="Toggle theme"
+                >
+                  {theme === "dark" ? (
+                    <>
+                      <Sun className="w-5 h-5" />
+                      <span className="text-base font-medium">Light Mode</span>
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="w-5 h-5" />
+                      <span className="text-base font-medium">Dark Mode</span>
+                    </>
+                  )}
+                </button>
+              </div>
 
               {/* Login Button */}
               <div className="mt-auto">

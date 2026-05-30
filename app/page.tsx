@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Talents } from "@/components/sections/Talents";
 import AboutUs from "@/components/sections/AboutUs";
+import AboutUsTwo from "@/components/sections/AboutUsTwo";
 
 const OurTalents = dynamic(() => import("@/components/sections/OurTalents"), {
   loading: () => <div className="min-h-[400px]" />,
@@ -23,7 +24,7 @@ export default function Home() {
       {/* Above the fold - loaded immediately */}
       <HeroSection />
       
-    <AboutUs />
+    <AboutUsTwo />
       
       <Talents />
       
