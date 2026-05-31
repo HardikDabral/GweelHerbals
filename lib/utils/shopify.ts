@@ -53,6 +53,20 @@ export interface ShopifyLiveProduct {
 export const parseVariantNumericId = (gid: string): string =>
     gid.split("/").pop() || gid;
 
+/** Decode HTML entities (e.g. "&amp;" → "&") that the Storefront API can return in text. */
+export function decodeEntities(str: string): string {
+    if (!str) return str;
+    return str
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#0?39;|&#x27;|&apos;/g, "'")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(parseInt(n, 10)))
+        .replace(/&#x([0-9a-fA-F]+);/g, (_, n) => String.fromCharCode(parseInt(n, 16)))
+        .replace(/&amp;/g, "&");
+}
+
 async function shopifyFetch<T>(query: string): Promise<T | null> {
     if (!STOREFRONT_TOKEN) {
         console.warn("Storefront token missing — skipping Shopify fetch (using local data).");
@@ -152,11 +166,11 @@ export async function getShopifyProducts(): Promise<ShopifyLiveProduct[]> {
         return {
             id: parseVariantNumericId(node.id),
             handle: node.handle,
-            title: node.title,
-            description: node.description,
-            productType: node.productType || "",
-            vendor: node.vendor || "",
-            tags: node.tags || [],
+            title: decodeEntities(node.title),
+            description: decodeEntities(node.description),
+            productType: decodeEntities(node.productType || ""),
+            vendor: decodeEntities(node.vendor || ""),
+            tags: (node.tags || []).map(decodeEntities),
             availableForSale: node.availableForSale,
             price: variant ? parseFloat(variant.price.amount) : 0,
             compareAtPrice: variant?.compareAtPrice

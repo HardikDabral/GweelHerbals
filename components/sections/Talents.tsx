@@ -240,7 +240,7 @@ export function Talents() {
                         {section.number}
                       </div>
                       <h3
-                        className="text-base sm:text-lg md:text-xl font-semibold mb-1.5"
+                        className="text-base sm:text-lg md:text-xl font-semibold mb-1.5 line-clamp-1"
                         style={{ color: isDark ? "#ffffff" : "#000000" }}
                       >
                         {section.title}
