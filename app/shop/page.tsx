@@ -79,39 +79,16 @@ export default function ShopPage() {
             });
     }, [products, searchQuery, selectedCategory, priceRange, sortBy]);
 
+    // No gold accent on the shop page — soft greyish-black in light mode, white in dark mode.
+    const goldText = isDark ? "text-white" : "text-[#3D3D3D]";
+    const goldGroupHover = isDark ? "group-hover:text-white" : "group-hover:text-[#3D3D3D]";
+    const goldBg = isDark ? "bg-white" : "bg-[#3D3D3D]";
+    const goldBorder = isDark ? "border-white" : "border-[#3D3D3D]";
+    const goldSolidBtn = isDark ? "bg-white text-black" : "bg-[#3D3D3D] text-white";
+
     return (
         <div className={`min-h-screen transition-colors duration-500 ${isDark ? "bg-[#1A1A1A] text-white" : "bg-white text-black"}`}>
-            {/* Immersive Shop Header */}
-            <div className="relative h-[25vh] md:h-[40vh] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <Image
-                        src="/images/talents/bigImageone.jpg"
-                        alt="Shop Banner"
-                        fill
-                        className="object-cover opacity-30 grayscale contrast-125"
-                    />
-                    <div className={`absolute inset-0 ${isDark ? "bg-gradient-to-b from-[#1A1A1A]/80 via-transparent to-[#1A1A1A]" : "bg-gradient-to-b from-white/80 via-transparent to-white"}`} />
-                </div>
-                <div className="relative z-10 text-center space-y-4 px-6">
-                    <motion.span
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-[#FEBE10] font-bold tracking-[0.5em] uppercase text-[10px]"
-                    >
-                        Pure Himalayan Treasures
-                    </motion.span>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="text-5xl md:text-7xl font-bold tracking-tighter"
-                    >
-                        THE APOTHECARY
-                    </motion.h1>
-                </div>
-            </div>
-
-            <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-24 pb-32 pt-8 lg:pt-0">
+            <div className="max-w-[1440px] mx-auto px-6 sm:px-12 lg:px-24 pb-32 pt-32">
                 <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
                     {/* Sidebar Filters */}
                     <aside className="w-full lg:w-1/4 space-y-8 lg:space-y-12">
@@ -123,15 +100,15 @@ export default function ShopPage() {
                                     placeholder="Search..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className={`w-full bg-transparent border-b ${isDark ? "border-white/10" : "border-black/10"} py-3 pl-10 focus:outline-none focus:border-[#FEBE10] transition-all text-sm tracking-wide`}
+                                    className={`w-full bg-transparent border rounded-full ${isDark ? "border-white/15 focus:border-white" : "border-black/15 focus:border-black"} py-3 pl-11 pr-4 focus:outline-none transition-all text-sm tracking-wide`}
                                 />
-                                <Search className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 group-hover:text-[#FEBE10] transition-colors" />
+                                <Search className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500 transition-colors ${goldGroupHover}`} />
                             </div>
 
                             {/* Mobile Filter Toggle */}
                             <button
                                 onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                className={`lg:hidden p-3 rounded-2xl border transition-all ${isFilterOpen ? "bg-[#FEBE10] border-[#FEBE10] text-black" : "border-black/10 dark:border-white/10 text-neutral-500"}`}
+                                className={`lg:hidden p-3 rounded-2xl border transition-all ${isFilterOpen ? `${goldSolidBtn} ${goldBorder}` : "border-black/10 dark:border-white/10 text-neutral-500"}`}
                             >
                                 <SlidersHorizontal className="w-5 h-5" />
                             </button>
@@ -150,11 +127,11 @@ export default function ShopPage() {
                                                 setSelectedCategory(cat.name);
                                                 if (window.innerWidth < 1024) setIsFilterOpen(false);
                                             }}
-                                            className={`flex items-center justify-between w-full text-left transition-all group ${selectedCategory === cat.name ? "text-[#FEBE10] translate-x-3" : "text-neutral-500 hover:text-black dark:hover:text-white"}`}
+                                            className={`flex items-center justify-between w-full text-left transition-all group ${selectedCategory === cat.name ? `${goldText} translate-x-3` : "text-neutral-500 hover:text-black dark:hover:text-white"}`}
                                         >
                                             <span className="text-sm font-medium tracking-[0.05em] uppercase">{cat.name}</span>
                                             <div className="flex items-center gap-3">
-                                                <div className={`h-[1px] w-4 bg-[#FEBE10] transition-all duration-500 ${selectedCategory === cat.name ? "opacity-100" : "opacity-0"}`} />
+                                                <div className={`h-[1px] w-4 ${goldBg} transition-all duration-500 ${selectedCategory === cat.name ? "opacity-100" : "opacity-0"}`} />
                                                 <span className={`text-[10px] tabular-nums font-bold ${selectedCategory === cat.name ? "opacity-100" : "opacity-30"}`}>{cat.count}</span>
                                             </div>
                                         </button>
@@ -166,7 +143,7 @@ export default function ShopPage() {
                             <div className="space-y-8">
                                 <div className="flex items-center justify-between">
                                     <h3 className="text-[10px] uppercase tracking-[0.4em] font-bold text-neutral-500">Value</h3>
-                                    <span className="text-sm font-bold text-[#FEBE10]">₹{priceRange}</span>
+                                    <span className={`text-sm font-bold ${goldText}`}>₹{priceRange}</span>
                                 </div>
                                 <div className="relative pt-2">
                                     <input
@@ -176,7 +153,7 @@ export default function ShopPage() {
                                         step="50"
                                         value={priceRange}
                                         onChange={(e) => setPriceRange(parseInt(e.target.value))}
-                                        className="w-full h-[2px] bg-neutral-800 appearance-none outline-none cursor-pointer accent-[#FEBE10]"
+                                        className={`w-full h-[2px] bg-neutral-800 appearance-none outline-none cursor-pointer ${isDark ? "accent-white" : "accent-black"}`}
                                     />
                                     <div className="flex justify-between mt-4 text-[9px] uppercase tracking-widest text-neutral-600 font-bold">
                                         <span>₹100</span>
@@ -201,10 +178,10 @@ export default function ShopPage() {
                                                 <Image src={p.smallImage} alt={p.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                                             </div>
                                             <div className="space-y-1">
-                                                <p className="text-[11px] font-bold tracking-tight line-clamp-1 group-hover:text-[#FEBE10] transition-colors">{p.title.split('–')[0]}</p>
+                                                <p className={`text-[11px] font-bold tracking-tight line-clamp-1 transition-colors ${goldGroupHover}`}>{p.title.split('–')[0]}</p>
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-[10px] font-bold text-[#FEBE10]">₹{p.cardContent.price?.current}</span>
-                                                    <div className="flex items-center text-[8px] text-[#FEBE10]/40">
+                                                    <span className={`text-[10px] font-bold ${goldText}`}>₹{p.cardContent.price?.current}</span>
+                                                    <div className={`flex items-center text-[8px] ${isDark ? "text-white/40" : "text-black/40"}`}>
                                                         <Star className="w-2 h-2 fill-current" />
                                                         <span className="ml-1 tracking-tighter">{p.rating}</span>
                                                     </div>
@@ -221,7 +198,7 @@ export default function ShopPage() {
                                     {tags.map(tag => (
                                         <button
                                             key={tag}
-                                            className={`px-4 py-2 border rounded-full text-[9px] uppercase tracking-widest font-bold transition-all ${isDark ? "border-white/5 bg-white/[0.02] hover:bg-white/10 hover:border-[#FEBE10] text-neutral-400 hover:text-white" : "border-black/5 bg-black/[0.02] hover:bg-black/5 hover:border-[#FEBE10] text-neutral-600 hover:text-black"}`}
+                                            className={`px-4 py-2 border rounded-full text-[9px] uppercase tracking-widest font-bold transition-all ${isDark ? "border-white/5 bg-white/[0.02] hover:bg-white/10 hover:border-white text-neutral-400 hover:text-white" : "border-black/5 bg-black/[0.02] hover:bg-black/5 hover:border-black text-neutral-600 hover:text-black"}`}
                                         >
                                             {tag}
                                         </button>
@@ -230,8 +207,8 @@ export default function ShopPage() {
                             </div>
 
                             <div className={`p-8 rounded-[40px] relative overflow-hidden group ${isDark ? "bg-white/[0.01] border border-white/5" : "bg-black/[0.01] border border-black/5"}`}>
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#FEBE10]/10 blur-[60px] -mr-16 -mt-16 group-hover:bg-[#FEBE10]/20 transition-all duration-700" />
-                                <h4 className="text-sm font-bold tracking-tight text-[#FEBE10] mb-2">Himalayan Origin</h4>
+                                <div className={`absolute top-0 right-0 w-32 h-32 blur-[60px] -mr-16 -mt-16 transition-all duration-700 ${isDark ? "bg-white/10 group-hover:bg-white/20" : "bg-black/10 group-hover:bg-black/20"}`} />
+                                <h4 className={`text-sm font-bold tracking-tight mb-2 ${goldText}`}>Himalayan Origin</h4>
                                 <p className="text-[11px] text-neutral-500 leading-relaxed font-light">Every vessel in our archives is hand-filled in Pauri Garhwal. Pure mountain soul, bottled for your sanctuary.</p>
                             </div>
                         </div>
@@ -247,13 +224,13 @@ export default function ShopPage() {
                                 <div className="flex items-center bg-black/5 dark:bg-white/5 rounded-full p-1 self-start sm:self-auto">
                                     <button
                                         onClick={() => setViewMode("grid")}
-                                        className={`p-2 rounded-full transition-all ${viewMode === "grid" ? "bg-[#FEBE10] text-black shadow-lg" : "text-neutral-500"}`}
+                                        className={`p-2 rounded-full transition-all ${viewMode === "grid" ? `${goldSolidBtn} shadow-lg` : "text-neutral-500"}`}
                                     >
                                         <LayoutGrid className="w-4 h-4" />
                                     </button>
                                     <button
                                         onClick={() => setViewMode("list")}
-                                        className={`p-2 rounded-full transition-all ${viewMode === "list" ? "bg-[#FEBE10] text-black shadow-lg" : "text-neutral-500"}`}
+                                        className={`p-2 rounded-full transition-all ${viewMode === "list" ? `${goldSolidBtn} shadow-lg` : "text-neutral-500"}`}
                                     >
                                         <List className="w-4 h-4" />
                                     </button>
@@ -289,41 +266,35 @@ export default function ShopPage() {
                                         className={`group cursor-pointer ${viewMode === "list" ? "flex flex-col sm:flex-row gap-8 items-center" : ""}`}
                                         onClick={() => { window.location.href = getShopifyProductUrl(product.productHandle!, product.shopifyVariantId); }}
                                     >
-                                        <div className={`relative overflow-hidden aspect-square rounded-[32px] sm:rounded-[48px] shadow-2xl transition-all duration-1000 group-hover:shadow-[#FEBE10]/10 ${viewMode === "list" ? "w-full sm:w-1/3" : "w-full"} ${isDark ? "bg-white/[0.03]" : "bg-neutral-50"}`}>
+                                        <div className={`relative overflow-hidden aspect-square rounded-xl sm:rounded-2xl border transition-all duration-1000 ${viewMode === "list" ? "w-full sm:w-1/3" : "w-full"} ${isDark ? "bg-white/[0.03] border-white/10" : "bg-neutral-50 border-black/10"}`}>
                                             <Image
                                                 src={product.smallImage}
                                                 alt={product.title}
                                                 fill
                                                 className="object-cover transition-transform duration-[2000ms] group-hover:scale-110 group-hover:rotate-1"
                                             />
-                                            <div className="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-all duration-1000 backdrop-grayscale-[0.5] group-hover:backdrop-grayscale-0" />
 
-                                            {/* Luxury Label */}
-                                            {product.cardContent.price?.discount && (
-                                                <div className="absolute top-6 left-6 py-1.5 px-3 bg-[#FEBE10] text-black text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg z-10">
-                                                    Limited Offer
+                                            {/* Stock Label */}
+                                            {product.live?.availableForSale && (
+                                                <div className={`absolute top-3 left-3 py-1.5 px-3 text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg z-10 ${goldSolidBtn}`}>
+                                                    In Stock
                                                 </div>
                                             )}
 
-                                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-700 transform scale-90 group-hover:scale-100">
-                                                <span className="px-6 py-2.5 bg-white/10 backdrop-blur-md border border-white/20 text-[9px] font-bold uppercase tracking-[0.3em] rounded-full text-white">
-                                                    Examine
-                                                </span>
-                                            </div>
                                         </div>
 
-                                        <div className={`space-y-4 ${viewMode === "list" ? "w-full sm:w-2/3 px-4" : "px-4 pt-8"}`}>
+                                        <div className={`space-y-1.5 ${viewMode === "list" ? "w-full sm:w-2/3 px-1" : "px-1 pt-3"}`}>
                                             <div className="flex items-center gap-4">
                                                 <span className="text-[10px] uppercase tracking-[0.4em] font-bold opacity-30">{product.category}</span>
-                                                <div className="flex items-center gap-1 text-[#FEBE10] scale-75 origin-left">
+                                                <div className={`flex items-center gap-1 scale-75 origin-left ${goldText}`}>
                                                     <Star className="w-3 h-3 fill-current" />
                                                     <span className="text-xs font-bold opacity-60 tracking-normal">{product.rating}</span>
                                                 </div>
                                             </div>
-                                            <h4 className="text-xl sm:text-2xl font-bold tracking-tighter group-hover:text-[#FEBE10] transition-colors leading-tight line-clamp-1">{product.title.split('–')[0]}</h4>
+                                            <h4 className={`text-base sm:text-lg font-bold tracking-tight transition-colors leading-tight line-clamp-1 ${goldGroupHover}`}>{product.title.split('–')[0]}</h4>
 
                                             <div className="flex items-center gap-3 sm:gap-6">
-                                                <span className="font-bold text-[#FEBE10] text-lg sm:text-2xl tracking-tighter">₹{product.cardContent.price?.current}</span>
+                                                <span className={`font-bold text-base sm:text-lg tracking-tight ${goldText}`}>₹{product.cardContent.price?.current}</span>
                                                 {product.cardContent.price?.original && (
                                                     <span className="text-sm text-neutral-600 line-through font-light opacity-50">₹{product.cardContent.price.original}</span>
                                                 )}
@@ -343,7 +314,7 @@ export default function ShopPage() {
                         {/* Loading State */}
                         {loading && products.length === 0 && (
                             <div className="py-40 flex justify-center">
-                                <div className="w-10 h-10 border-2 border-[#FEBE10] border-t-transparent rounded-full animate-spin" />
+                                <div className={`w-10 h-10 border-2 border-t-transparent rounded-full animate-spin ${goldBorder}`} />
                             </div>
                         )}
 
@@ -364,7 +335,7 @@ export default function ShopPage() {
                                             setSelectedCategory("All");
                                             setPriceRange(1000);
                                         }}
-                                        className="text-[10px] uppercase tracking-[0.4em] font-bold text-[#FEBE10] border-b border-[#FEBE10] pb-2 hover:opacity-50 transition-all"
+                                        className={`text-[10px] uppercase tracking-[0.4em] font-bold border-b ${goldBorder} pb-2 hover:opacity-50 transition-all ${goldText}`}
                                     >
                                         Clear all filters
                                     </button>
@@ -380,7 +351,7 @@ export default function ShopPage() {
                                     {[1, 2, 3].map(page => (
                                         <button
                                             key={page}
-                                            className={`w-10 h-10 rounded-full text-[10px] font-bold border transition-all ${page === 1 ? "bg-[#FEBE10] border-[#FEBE10] text-black" : "border-neutral-800 text-neutral-500 hover:border-[#FEBE10] hover:text-[#FEBE10]"}`}
+                                            className={`w-10 h-10 rounded-full text-[10px] font-bold border transition-all ${page === 1 ? `${goldSolidBtn} ${goldBorder}` : `border-neutral-800 text-neutral-500 ${isDark ? "hover:border-white hover:text-white" : "hover:border-black hover:text-black"}`}`}
                                         >
                                             0{page}
                                         </button>

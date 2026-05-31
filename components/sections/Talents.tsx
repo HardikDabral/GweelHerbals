@@ -62,6 +62,16 @@ function Card3D({ children, className, style, onClick }: { children: React.React
   );
 }
 
+// Cool, modern gradient backdrops for each carousel card (rotates by index).
+const CARD_GRADIENTS = [
+  "linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%)", // ocean slate → teal
+  "linear-gradient(135deg, #29516b 0%, #5fa8b8 100%)", // sea blue → aqua
+  "linear-gradient(135deg, #2b5a5a 0%, #5fb0a3 100%)", // teal → mint
+  "linear-gradient(135deg, #324b5c 0%, #6aa0b5 100%)", // slate → sky
+  "linear-gradient(135deg, #265668 0%, #5aa6ad 100%)", // deep cyan → seafoam
+  "linear-gradient(135deg, #3a5a6e 0%, #74a9bf 100%)", // dusty blue
+];
+
 export function Talents() {
   const { products } = useShopifyProducts();
   const sectionRef = useRef<HTMLElement>(null);
@@ -236,7 +246,7 @@ export function Talents() {
                         {section.title}
                       </h3>
                       <p
-                        className="text-xs sm:text-sm leading-relaxed max-w-[400px] mb-3"
+                        className="text-xs sm:text-sm leading-relaxed max-w-[400px] mb-3 line-clamp-3"
                         style={{ color: isDark ? "#ffffff" : "#000000" }}
                       >
                         {section.description}
@@ -262,15 +272,11 @@ export function Talents() {
                       )} */}
                     </div>
 
-                    {/* Middle: Big Image (Relative) */}
-                    <div className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] rounded-2xl">
-                      <Image
-                        src={section.bigImage}
-                        alt={section.title}
-                        fill
-                        className="object-cover rounded-lg"
-                        priority={section.id === 1}
-                      />
+                    {/* Middle: Gradient Backdrop (Relative) */}
+                    <div
+                      className="relative w-full h-[200px] sm:h-[240px] md:h-[280px] rounded-2xl"
+                      style={{ background: CARD_GRADIENTS[index % CARD_GRADIENTS.length] }}
+                    >
 
                       {/* Bottom: Small Image Card (Absolute with translate - centered) */}
                       <div

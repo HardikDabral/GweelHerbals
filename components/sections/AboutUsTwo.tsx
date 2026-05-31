@@ -72,7 +72,7 @@ export default function AboutUsTwo() {
 
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-10 pt-4">
               <Link
-                href="/#products"
+                href="/shop"
                 className="group flex items-center gap-4 w-fit px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 flex-shrink-0"
                 style={{
                   background: "#FEBE10",
