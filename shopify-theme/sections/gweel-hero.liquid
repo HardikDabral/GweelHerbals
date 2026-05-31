@@ -1,0 +1,234 @@
+{%- comment -%}
+  Gweel Herbals — Hero Section
+  Drop this file into your theme's /sections folder, then add the
+  "Gweel Hero" section to your home page in the theme editor.
+{%- endcomment -%}
+
+<section
+  class="gweel-hero"
+  style="--gweel-gold: {{ section.settings.accent_color }}; --gweel-dark: {{ section.settings.overlay_color }};"
+>
+  <div class="gweel-hero__card">
+    {%- if section.settings.background_image != blank -%}
+      <img
+        class="gweel-hero__bg"
+        src="{{ section.settings.background_image | image_url: width: 2400 }}"
+        srcset="
+          {{ section.settings.background_image | image_url: width: 800 }} 800w,
+          {{ section.settings.background_image | image_url: width: 1400 }} 1400w,
+          {{ section.settings.background_image | image_url: width: 2400 }} 2400w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.heading_line_1 | escape }}"
+        loading="eager"
+        width="2400"
+        height="1350"
+      >
+    {%- else -%}
+      <div class="gweel-hero__bg gweel-hero__bg--placeholder"></div>
+    {%- endif -%}
+
+    <div class="gweel-hero__overlay"></div>
+
+    <div class="gweel-hero__content">
+      <h1 class="gweel-hero__title">
+        {{ section.settings.heading_line_1 }}
+        {%- if section.settings.heading_line_2 != blank %}<br>{{ section.settings.heading_line_2 }}{% endif -%}
+      </h1>
+
+      {%- if section.settings.description != blank -%}
+        <p class="gweel-hero__desc">{{ section.settings.description | newline_to_br }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}" class="gweel-hero__btn">
+          <span>{{ section.settings.button_label }}</span>
+          <span class="gweel-hero__btn-arrow" aria-hidden="true">&rsaquo;</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.footer_text != blank -%}
+        <p class="gweel-hero__footer">{{ section.settings.footer_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gweel-hero {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 1rem 1rem 0;
+    background: #ffffff;
+  }
+  .gweel-hero * { box-sizing: border-box; }
+
+  .gweel-hero__card {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 7rem);
+    min-height: 480px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  }
+
+  .gweel-hero__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .gweel-hero__bg--placeholder {
+    background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+  }
+
+  .gweel-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--gweel-dark) 70%, transparent),
+      color-mix(in srgb, var(--gweel-dark) 40%, transparent),
+      color-mix(in srgb, var(--gweel-dark) 80%, transparent)
+    );
+  }
+
+  .gweel-hero__content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+
+  .gweel-hero__title {
+    margin: 0 0 1.25rem;
+    color: #ffffff;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-size: clamp(1.875rem, 5vw, 3.75rem);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .gweel-hero__desc {
+    margin: 0 0 1.75rem;
+    max-width: 48rem;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .gweel-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.95rem 2rem;
+    border-radius: 9999px;
+    background: var(--gweel-gold);
+    color: #1a1a1a;
+    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid color-mix(in srgb, var(--gweel-gold) 80%, transparent);
+    box-shadow: 0 8px 24px rgba(254, 190, 16, 0.5), 0 0 40px rgba(254, 190, 16, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .gweel-hero__btn:hover {
+    transform: scale(1.05);
+    background: #ffc832;
+    box-shadow: 0 12px 32px rgba(254, 190, 16, 0.6), 0 0 50px rgba(254, 190, 16, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .gweel-hero__btn-arrow { font-size: 1.2em; line-height: 1; }
+
+  .gweel-hero__footer {
+    margin: 1.5rem 0 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+  }
+
+  @media (max-width: 640px) {
+    .gweel-hero__card { height: calc(100vh - 6rem); border-radius: 18px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Gweel Hero",
+  "tag": "section",
+  "class": "gweel-hero-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_1",
+      "label": "Heading line 1",
+      "default": "Pure Himalayan Lemongrass"
+    },
+    {
+      "type": "text",
+      "id": "heading_line_2",
+      "label": "Heading line 2",
+      "default": "Rituals for Discerning Homes"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Transform quiet Himalayan evenings into spa-like calm with slow rituals.\nLimited-batch distillation, handpicked from mountain fields.\nCrafted for those who seek more than mass-produced wellness."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Defaults to the All products collection if left empty."
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "100% Organic & Chemical-Free"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent (button) color",
+      "default": "#FEBE10"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#1A1A1A"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gweel Hero"
+    }
+  ]
+}
+{% endschema %}
