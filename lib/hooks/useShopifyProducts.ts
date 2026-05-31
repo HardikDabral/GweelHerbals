@@ -20,11 +20,11 @@ const PLACEHOLDER_IMAGE = "/images/talents/bigImageone.jpg";
 function mapLiveToProduct(live: ShopifyLiveProduct, index: number): MergedProduct {
     const images = live.images.length > 0 ? live.images : [PLACEHOLDER_IMAGE];
     const current = Math.round(live.price);
-    // Use Shopify's compare-at price if set; otherwise show a "was" price of current + 200.
+    // Use Shopify's compare-at price if set; otherwise show a "was" price of current + 50.
     const original =
         live.compareAtPrice && live.compareAtPrice > live.price
             ? Math.round(live.compareAtPrice)
-            : current + 200;
+            : current + 50;
     const discount =
         original > current ? Math.round(((original - current) / original) * 100) : 0;
     const category = live.productType || "Wellness";
