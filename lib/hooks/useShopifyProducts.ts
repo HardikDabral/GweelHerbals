@@ -12,6 +12,31 @@ export interface MergedProduct extends TalentSection {
 
 const PLACEHOLDER_IMAGE = "/images/talents/bigImageone.jpg";
 
+/** Lowest star rating a product can be shown with. */
+const MIN_RATING = 4.2;
+const MAX_RATING = 5;
+
+/**
+ * Pick a star rating in the MIN_RATING–MAX_RATING band, varied per product.
+ *
+ * Derived by hashing the product handle rather than calling Math.random(), so a
+ * product keeps the same rating across re-renders, route changes and reloads —
+ * a number that shifted on every paint would read as broken, and the shop page
+ * sorts by rating, so an unstable value would reshuffle the grid as you look
+ * at it.
+ */
+function ratingFor(key: string): number {
+    // FNV-1a — small, stable, and well spread across short strings like handles.
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < key.length; i++) {
+        hash ^= key.charCodeAt(i);
+        hash = Math.imul(hash, 0x01000193);
+    }
+    const steps = Math.round((MAX_RATING - MIN_RATING) * 10) + 1; // 4.2, 4.3, … 5.0
+    const step = (hash >>> 0) % steps;
+    return Math.round((MIN_RATING + step * 0.1) * 10) / 10;
+}
+
 /**
  * Build the UI product shape entirely from a live Shopify product.
  * Shopify is the single source of truth — anything Shopify doesn't provide
@@ -49,7 +74,7 @@ function mapLiveToProduct(live: ShopifyLiveProduct, index: number): MergedProduc
         sku: live.sku,
         category,
         tags: live.tags,
-        rating: 5,
+        rating: ratingFor(live.handle || live.id || live.title),
         reviewsCount: 0,
         fullDescription: live.description,
         additionalInfo,
