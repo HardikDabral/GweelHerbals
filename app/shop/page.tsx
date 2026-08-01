@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getShopifyProductUrl } from "@/lib/utils/shopify";
+import { badgesFor, badgeClasses } from "@/lib/utils/badges";
 import {
     Search,
     ChevronDown,
@@ -278,6 +279,20 @@ export default function ShopPage() {
                                             {product.live?.availableForSale && (
                                                 <div className={`absolute top-3 left-3 py-1.5 px-3 text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg z-10 ${goldSolidBtn}`}>
                                                     In Stock
+                                                </div>
+                                            )}
+
+                                            {/* Merchandising badges, driven by Shopify tags */}
+                                            {badgesFor(product.tags).length > 0 && (
+                                                <div className="absolute bottom-3 left-3 right-3 z-10 flex flex-wrap items-end gap-1.5">
+                                                    {badgesFor(product.tags).map((badge) => (
+                                                        <span
+                                                            key={badge.label}
+                                                            className={`py-1.5 px-3 text-[9px] font-bold uppercase tracking-widest rounded-full shadow-lg ${badgeClasses[badge.kind]}`}
+                                                        >
+                                                            {badge.label}
+                                                        </span>
+                                                    ))}
                                                 </div>
                                             )}
 
