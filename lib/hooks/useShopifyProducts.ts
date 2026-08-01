@@ -25,6 +25,15 @@ const MIN_RATING = 4.2;
 const MAX_RATING = 5;
 
 /**
+ * Ratings pinned by hand, keyed on the Shopify product handle. Anything not
+ * listed here falls back to the derived rating below.
+ */
+const RATING_OVERRIDES: Record<string, number> = {
+    "berry-velvet-luxury-car-perfume-10ml": 4.7,
+    "lemongrass-aroma-essence-100-pure-organic-amp-undiluted-lemongrass-oil": 5,
+};
+
+/**
  * Pick a star rating in the MIN_RATING–MAX_RATING band, varied per product.
  *
  * Derived by hashing the product handle rather than calling Math.random(), so a
@@ -34,6 +43,9 @@ const MAX_RATING = 5;
  * at it.
  */
 function ratingFor(key: string): number {
+    const pinned = RATING_OVERRIDES[key];
+    if (pinned !== undefined) return pinned;
+
     // FNV-1a — small, stable, and well spread across short strings like handles.
     let hash = 0x811c9dc5;
     for (let i = 0; i < key.length; i++) {
