@@ -1,0 +1,199 @@
+{%- comment -%}
+  Gweel Herbals — Scrolling Announcement Bar (marquee)
+  Drop this into your theme's /sections folder, then add it in the theme editor
+  ABOVE the header (Customize → Header group → Add section → Gweel Announcement Bar).
+
+  The marquee loops seamlessly by rendering the message group twice and sliding
+  the track -50%: when the first copy has fully exited, the second sits exactly
+  where the first began, so the animation restarts with no visible jump.
+{%- endcomment -%}
+
+{%- assign msg = section.settings.message -%}
+
+{%- if msg != blank -%}
+  <div
+    class="gweel-marquee{% if section.settings.sticky %} gweel-marquee--sticky{% endif %}"
+    style="
+      --gweel-marquee-bg: {{ section.settings.background_color }};
+      --gweel-marquee-fg: {{ section.settings.text_color }};
+      --gweel-marquee-speed: {{ section.settings.speed }}s;
+    "
+    role="region"
+    aria-label="Announcement"
+  >
+    <div class="gweel-marquee__viewport">
+      <div class="gweel-marquee__track">
+        {%- comment -%}
+          Two identical groups: the first is read by screen readers, the second
+          is aria-hidden so the promo isn't announced twice.
+        {%- endcomment -%}
+        <div class="gweel-marquee__group">
+          {%- for i in (1..section.settings.repeat) -%}
+            <span class="gweel-marquee__item">
+              {{ msg }}
+              <span class="gweel-marquee__sep" aria-hidden="true">✦</span>
+            </span>
+          {%- endfor -%}
+        </div>
+        <div class="gweel-marquee__group" aria-hidden="true">
+          {%- for i in (1..section.settings.repeat) -%}
+            <span class="gweel-marquee__item">
+              {{ msg }}
+              <span class="gweel-marquee__sep">✦</span>
+            </span>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .gweel-marquee {
+      width: 100%;
+      background: var(--gweel-marquee-bg);
+      color: var(--gweel-marquee-fg);
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .gweel-marquee--sticky {
+      position: sticky;
+      top: 0;
+      z-index: 60; /* above .gweel-nav (z-index: 50) so the pill scrolls under it */
+    }
+    .gweel-marquee * { box-sizing: border-box; }
+
+    .gweel-marquee__viewport {
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .gweel-marquee__track {
+      display: flex;
+      flex-shrink: 0;
+      min-width: 100%;
+      width: max-content;
+      animation: gweel-marquee-scroll var(--gweel-marquee-speed) linear infinite;
+    }
+    .gweel-marquee:hover .gweel-marquee__track {
+      animation-play-state: paused;
+    }
+
+    .gweel-marquee__group {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .gweel-marquee__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 0.65rem 1.25rem;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1.4;
+    }
+    .gweel-marquee__sep {
+      opacity: 0.55;
+      font-size: 11px;
+    }
+
+    @keyframes gweel-marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* Respect reduced-motion: stop scrolling and center the message instead. */
+    @media (prefers-reduced-motion: reduce) {
+      .gweel-marquee__track {
+        animation: none;
+        justify-content: center;
+        min-width: 0;
+        width: 100%;
+      }
+      .gweel-marquee__group:nth-child(1) .gweel-marquee__item:not(:first-child),
+      .gweel-marquee__group:nth-child(2) {
+        display: none;
+      }
+      .gweel-marquee__group:nth-child(1) .gweel-marquee__item .gweel-marquee__sep {
+        display: none;
+      }
+      .gweel-marquee__viewport { justify-content: center; }
+    }
+
+    @media (max-width: 640px) {
+      .gweel-marquee__item {
+        font-size: 11.5px;
+        padding: 0.55rem 0.9rem;
+        gap: 0.9rem;
+      }
+    }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Gweel Announcement Bar",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "message",
+      "label": "Message",
+      "default": "New Launch Special | Flat 15% off on all ranges — Discount code: WELCOME15"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll duration",
+      "info": "Seconds for one full loop. Higher = slower.",
+      "min": 10,
+      "max": 90,
+      "step": 5,
+      "unit": "s",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "repeat",
+      "label": "Repetitions",
+      "info": "How many times the message repeats per loop. Raise it if you see a gap on wide screens.",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky",
+      "label": "Stick to top on scroll",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FEBE10"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#1A1A1A"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gweel Announcement Bar"
+    }
+  ]
+}
+{% endschema %}
