@@ -12,6 +12,14 @@ export interface MergedProduct extends TalentSection {
 
 const PLACEHOLDER_IMAGE = "/images/talents/bigImageone.jpg";
 
+/**
+ * Headline discount the storefront advertises. Used only to derive a
+ * struck-through "MRP" when a product has no compare-at price in Shopify:
+ * at 0.25 a ₹299 product shows against ₹399. Setting a compare-at price on
+ * the product in Shopify always overrides this.
+ */
+const ASSUMED_DISCOUNT = 0.25;
+
 /** Lowest star rating a product can be shown with. */
 const MIN_RATING = 4.2;
 const MAX_RATING = 5;
@@ -45,11 +53,12 @@ function ratingFor(key: string): number {
 function mapLiveToProduct(live: ShopifyLiveProduct, index: number): MergedProduct {
     const images = live.images.length > 0 ? live.images : [PLACEHOLDER_IMAGE];
     const current = Math.round(live.price);
-    // Use Shopify's compare-at price if set; otherwise show a "was" price of current + 50.
+    // Use Shopify's compare-at price if set; otherwise work the "was" price back
+    // out of ASSUMED_DISCOUNT so the pair always reads as that percentage off.
     const original =
         live.compareAtPrice && live.compareAtPrice > live.price
             ? Math.round(live.compareAtPrice)
-            : current + 50;
+            : Math.round(current / (1 - ASSUMED_DISCOUNT));
     const discount =
         original > current ? Math.round(((original - current) / original) * 100) : 0;
     const category = live.productType || "Wellness";
